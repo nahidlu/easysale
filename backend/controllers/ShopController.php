@@ -36,8 +36,31 @@ class ShopController extends \yii\web\Controller
     }
 	
 	public function actionEdit(){
-	$id= $_GET['id'];	
-	echo $id;exit;	
+		$connection = \Yii::$app->db;
+		$data = $connection->createCommand('SELECT tbl_shop.ShopID,ShopName,ContactPerson,ContactNo,tbl_shopuser.shop_id,username from tbl_shop,tbl_shopuser where tbl_shop.ShopID = tbl_shopuser.shop_id');
+		$users = $data->queryAll();
+		$id= $_GET['id'];	
+		$model = $this->findModel($id);
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index', 'id' => $model->id]);
+        } else {
+            return $this->render('index', [
+                'model' => $model,'users'=>$users
+            ]);
+        }
+
+	}
+	protected function findModel($id)
+    {
+        $model = Shop::find()->where(['ShopID' => $id])->one();
+		return $model;
+    }
+	
+	public function actionUpdateusername()
+	{
+		$value=$_POST['value'];
+		$id=$_POST['pk'];
+		$update=Shopuser::updateAll(['username' => $value], 'shop_id ="'.$id.'"');
 	}
 	
 

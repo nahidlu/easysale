@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 //use yii\bootstrap\ActiveForm;
 use kartik\widgets\DatePicker;
 use yii\helpers\ArrayHelper;
-use kartik\widgets\TimePicker;
+use kartik\widgets\Select2;
 use backend\models\Shop;
 use yii\db\Query;
 
@@ -66,8 +66,26 @@ use yii\db\Query;
 <table class="table table-bordered">
 	<tr><td>Shop Name</td><td>Conatct Person</td><td>Contact No</td><td>Username</td><td>Action</td></tr>
 <?php foreach($users as $value){
-echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td>".$value['ContactNo']."</td><td>".$value['username']."</td><td><a href='".Yii::$app->urlManager->createUrl(['shop/edit', 'id' =>$value['ShopID']])."'><i class='glyphicon glyphicon-edit'></i></a></td></tr>";	
-} ?>
+echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td>".$value['ContactNo']."</td><td>".
+									 \mcms\xeditable\XEditableText::widget([
+										'model' => $value,
+										'placement' => 'right',
+										'url'=>'shop/updateusername',
+										'pluginOptions' => [
+											'name' => $value['username'],
+											'id'=> $value['ShopID'],
+										],
+										'callbacks' => [
+											'validate' => new \yii\web\JsExpression('
+												function(value) {
+													if($.trim(value) == "") {
+														return "This field is required";
+													}
+												}
+											')
+										]
+									])."</td><td><a href='".Yii::$app->urlManager->createUrl(['shop/edit', 'id' =>$value['ShopID']])."'><i class='glyphicon glyphicon-edit'></i></a></td></tr>"; 
+									} ?>
 </table>
 </div>
 </div>
