@@ -1,10 +1,10 @@
 <?php
-namespace backend\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\web\session;
-
+use yii\web\IdentityInterface;
 /**
  * Login form
  */
@@ -41,7 +41,7 @@ class AdminLoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-         $user = $this->getUser();
+            $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
@@ -70,22 +70,23 @@ class AdminLoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = AdminUser::findByUsername($this->username);
+            $this->_user = Shopuser::findByUsername($this->username);
         }
 
         return $this->_user;
     }
 	
-	public function userType(){
+	 public function userType(){
 		$session = new Session;
 		$session->open();
-		$us = AdminUser::find($session['pk'])->one();
-		return $us->user_type;
+		$us = Shopuser::find($session['pk'])->one();
+		return $us->type;
 	}
+	/*
 	public function shopId(){
 		$session = new Session;
 		$session->open();
 		$shop = AdminUser::find($session['pk'])->one();
 		return $shop->shopid;	
-	}
+	} */
 }

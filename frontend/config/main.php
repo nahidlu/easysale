@@ -11,9 +11,13 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+	'defaultRoute' => 'login',
+    'bootstrap' => ['log'],
+    'modules' => [],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'frontend\models\Shopuser',
+			'loginUrl' => 'login\index',
             'enableAutoLogin' => true,
         ],
         'log' => [
