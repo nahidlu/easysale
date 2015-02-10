@@ -36,7 +36,7 @@ class Shopuser extends ActiveRecord implements IdentityInterface
         return [
             [['shop_id', 'username', 'password', 'type'], 'required'],
             [['type'], 'integer'],
-            [['shop_id', 'username,auth_key,password_hash', 'password'], 'string', 'max' => 255]
+          //  [['shop_id', 'username', 'password'], 'string', 'max' => 255]
         ];
     }
 

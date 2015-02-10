@@ -82,11 +82,11 @@ class AdminLoginForm extends Model
 		$us = Shopuser::find($session['pk'])->one();
 		return $us->type;
 	}
-	/*
-	public function shopId(){
+	
+	public function shopid(){
 		$session = new Session;
 		$session->open();
-		$shop = AdminUser::find($session['pk'])->one();
-		return $shop->shopid;	
-	} */
+		$shop = Shopuser::find($session['pk'])->one();
+		return $shop->shop_id;	
+	} 
 }

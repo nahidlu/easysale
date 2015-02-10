@@ -46,7 +46,7 @@ use yii\db\Query;
 	 <?= $form->field($model, 'password')->textInput(['placeholder' => 'Password']) ?>
 </div>
 <div class="form-group">
-	 <?= $form->field($model, 'usertype')->textInput(['placeholder' => 'Usertype']) ?>
+	 <?= $form->field($model, 'usertype')->dropDownList(['2' => 'Shop Admin','3'=>'Manager']) ?>
 </div>
 <div class="form-group">
 	 <?= $form->field($model, 'Logo')->textInput(['placeholder' => 'Contact Person']) ?>

@@ -52,7 +52,10 @@ class LoginController extends \yii\web\Controller
         $model = new AdminLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 		$type = $model->userType(); 
+		$shop_id = $model->shopid(); 
 		$session['type'] = $type;
+		$session['shopid'] = $shop_id;
+		//echo $session['type'];exit;
         return $this->render('dashboard');
 		
         } else {
