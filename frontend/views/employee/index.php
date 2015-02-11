@@ -9,10 +9,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\Select2;
 use backend\models\Shop;
 use yii\db\Query;
-use yii\web\session;
-$session = Yii::$app->session;
-$session->open();
-echo $session['shopid'];exit;
+
 ?>
 <div class="row">
 
@@ -67,7 +64,7 @@ echo "<tr><td>".$value['username']."</td><td>".$value['type']."</td><td><a href=
                     $scope.errors.splice(0, $scope.errors.length); // remove all error messages
                     $scope.msgs.splice(0, $scope.msgs.length);
  
-                    $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('employee/save') ?>", {"uname": $scope.username, "pswd": $scope.password, "type": $scope.usertype}
+                    $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('employee/test') ?>", {"uname": $scope.username, "pswd": $scope.password, "type": $scope.usertype}
                     ).success(function(data, status, headers, config) {
                         if (data.msg != "")
                         {

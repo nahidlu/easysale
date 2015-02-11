@@ -1,9 +1,6 @@
 <?php
 namespace common\models;
-
 use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -31,27 +28,28 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{tbl_shopuser}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
+  /*   public function behaviors()
     {
         return [
             TimestampBehavior::className(),
         ];
-    }
+    } */
 
     /**
      * @inheritdoc
      */
-    public function rules()
+     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+           // [['shop_id', 'username', 'password', 'type'], 'required'],
+            [['type'], 'integer'],
+          //  [['shop_id', 'username', 'password'], 'string', 'max' => 255]
         ];
     }
 
@@ -60,7 +58,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['sn' => $id]);
     }
 
     /**
@@ -79,7 +77,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username]);
     }
 
     /**

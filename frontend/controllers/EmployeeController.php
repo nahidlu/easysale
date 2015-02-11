@@ -3,9 +3,7 @@
 namespace frontend\controllers;
 use yii;
 use yii\filters\AccessControl;
-use frontend\models\Shopuser;
-use yii\filters\VerbFilter;
-use yii\web\Session;
+use common\models\User;
 
 class EmployeeController extends \yii\web\Controller
 {
@@ -14,31 +12,30 @@ class EmployeeController extends \yii\web\Controller
     public function actionIndex()
     {
 		
-		$model = new Shopuser;
-		$data = Shopuser::find()->all();
+		$model = new User;
+		$data = User::find()->all();
 		
 	
         return $this->render('index',['model'=>$model,'data'=>$data]);
     }
 	
-	public function actionSave(){
-	    $session = Yii::$app->session;
-		$session->open();
+	
+	
+	public function actionTest(){
+		
 		$data = json_decode(file_get_contents("php://input"));
-		$username =$data->uname;
+		$username = $data->uname;
 		$password = $data->pswd;
 		$usertype = $data->type;
-		$model = new Shopuser();
+		$model = new User();
 		$model->username =  $username;
 		$model->password =  md5($password);
-		echo $model->type =  $usertype;
-		$model->shop_id =$session->get('shopid');
-		echo $session->get('shopid');
-		print_r($_SESSION);
-		$session['shopid'] = 4444;
-		echo $session['shopid'];
-		exit;
+		$model->type =  $usertype;
+		
+		$model->shop_id = Yii::$app->session->get('shopid');
+		
 		$model->save();
+		
 	}
 
 }

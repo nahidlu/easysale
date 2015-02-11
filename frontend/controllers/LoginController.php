@@ -7,6 +7,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use frontend\models\LoginForm;
+use common\models\User;
 use yii\filters\VerbFilter;
 use yii\web\session;
 
@@ -41,9 +42,6 @@ class LoginController extends \yii\web\Controller
 	
     public function actionIndex()
     {	
-		$session = new Session;
-		$session->open();
-		
     	if (!\Yii::$app->user->isGuest) {
             //return $this->goHome();
     		return $this->render('dashboard');
@@ -51,13 +49,14 @@ class LoginController extends \yii\web\Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-		$type = $model->userType(); 
-		$shop_id = $model->shopid(); 
-		$session['type'] = $type;
-		$session['shopid'] = $shop_id;
-		Yii::$app->session->set('aaa','abir');
-        return $this->render('dashboard');
-       // $this->redirect('employee/index');
+		$pk = Yii::$app->user->identity->id;
+		$shopid = User::find()->where(['sn' => $pk])->one();
+		Yii::$app->session->set('shopid',$shopid->shop_id);
+		Yii::$app->session->set('usertype',$shopid->type);
+		
+		
+	   return $this->render('dashboard');
+     
 		
         } else {
             return $this->render('login', [

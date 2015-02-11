@@ -76,17 +76,15 @@ class LoginForm extends Model
         return $this->_user;
     }
 	
-	 public function userType(){
+	/*  public function userType(){
 		$session = new Session;
 		$session->open();
 		$us = Shopuser::find($session['pk'])->one();
 		return $us->type;
-	}
+	}*/
 	
-	public function shopid(){
-		$session = new Session;
-		$session->open();
+	public function Shopid(){
 		$shop = Shopuser::find($session['pk'])->one();
 		return $shop->shop_id;	
-	} 
+	}  
 }

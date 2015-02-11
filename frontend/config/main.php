@@ -16,7 +16,7 @@ return [
     'modules' => [],
     'components' => [
         'user' => [
-            'identityClass' => 'frontend\models\Shopuser',
+            'identityClass' => 'common\models\User',
 			'loginUrl' => 'login\index',
             'enableAutoLogin' => true,
         ],
@@ -28,6 +28,10 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+		'session' => [
+            'name' => 'PHPFRONTSESSID',
+            'savePath' => __DIR__ . '/../tmp',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
