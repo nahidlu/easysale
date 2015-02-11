@@ -12,7 +12,7 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" ng-app >
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,8 +34,8 @@ AppAsset::register($this);
 			if (!Yii::$app->user->isGuest) {
 				$menuItems = [
 					// ['label' => 'Create Shop', 'url' => ['/shop/index']],
-					['label' => 'Transactions', 'url' => ['/transactions/index']],
-					['label' => 'Employee', 'url' => ['/employees/index']],
+					
+					['label' => 'Employee', 'url' => ['/employee/index']],
 					['label' => 'Project', 'url' => ['/project/index']],
 					['label' => 'Attendance', 'url' => ['/attendance/index']],
 					['label' => 'Invoice', 'url' => ['/invoice/index']]

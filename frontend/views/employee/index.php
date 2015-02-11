@@ -11,7 +11,12 @@ use backend\models\Shop;
 use yii\db\Query;
 
 ?>
-<div class="row">
+<script>
+
+
+
+</script>
+<div class="row" ng-controller="FrmController">
 
 <div class="col-md-6">
 <h3>Manage Employee</h3><hr>
@@ -24,8 +29,10 @@ use yii\db\Query;
 			</h5>
 <?php endif;?>
 <div id='dv1'>
-<form ng-app ng-controller="FrmController">
-			
+<form  >
+	 <ul>
+                    <li class="alert in alert-block fade alert-success" ng-repeat="msg in msgs"> {{ msg}} </li>
+                </ul>		
   <div class="form-group">
     <label >Username</label>
     <input type="text" class="form-control"  ng-model="username"  placeholder="Enter Username">
@@ -44,31 +51,44 @@ use yii\db\Query;
 </div>
 <div class="col-md-6">
 <h3>Manage Shop</h3><hr>
+<div >
 <table class="table table-bordered">
 	<tr><td>Username</td><td>User Type</td><td>Action</td></tr>
-<?php foreach($data as $value){
-echo "<tr><td>".$value['username']."</td><td>".$value['type']."</td><td><a href='".Yii::$app->urlManager->createUrl(['shop/edit', 'id' =>$value['sn']])."'><i class='glyphicon glyphicon-edit'></i></a></td></tr>"; 
-									} ?>
+	<tr ng-repeat="x in data">
+                        <td>{{x.username}}</td>
+                        <td>{{x.type}}</td>
+                        <td></td>
+                    </tr>
 </table>
+</div>
 </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 <script type="text/javascript">
-    
+
+
+  
 	function FrmController($scope, $http) {
                 $scope.errors = [];
                 $scope.msgs = [];
- 
+				 
+					 $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('employee/view') ?>")
+					.success(function(response) {$scope.data = response;});
+				
+				
                 $scope.Send = function() {
  
                     $scope.errors.splice(0, $scope.errors.length); // remove all error messages
                     $scope.msgs.splice(0, $scope.msgs.length);
- 
+					
+					
                     $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('employee/test') ?>", {"uname": $scope.username, "pswd": $scope.password, "type": $scope.usertype}
                     ).success(function(data, status, headers, config) {
                         if (data.msg != "")
                         {
                             $scope.msgs.push(data.msg);
+							  $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('employee/view') ?>")
+								.success(function(response) {$scope.data = response;});
                         }
                         else
                         {

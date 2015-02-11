@@ -13,10 +13,7 @@ class EmployeeController extends \yii\web\Controller
     {
 		
 		$model = new User;
-		$data = User::find()->all();
-		
-	
-        return $this->render('index',['model'=>$model,'data'=>$data]);
+		return $this->render('index',['model'=>$model]);
     }
 	
 	
@@ -34,8 +31,20 @@ class EmployeeController extends \yii\web\Controller
 		
 		$model->shop_id = Yii::$app->session->get('shopid');
 		
-		$model->save();
+		if($model->save()){
+		$arr = array('msg' => "User Created Successfully !!!", 'error' => '');
+        $jsn = json_encode($arr);
+        print_r($jsn);
+		}
+	}
+	
+	public function actionView(){
 		
+			$data = User::find()->asArray()->all();
+			//print_r($datass);exit;
+			//$data = array()$datass;
+			//print_r($data[]);exit;
+			print json_encode($data);
 	}
 
 }
