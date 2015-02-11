@@ -9,21 +9,37 @@ use yii\web\Session;
 
 class EmployeeController extends \yii\web\Controller
 {
+	public $enableCsrfValidation = false;
+	
     public function actionIndex()
     {
-		$session = new Session;
-		$session->open();
+		
 		$model = new Shopuser;
 		$data = Shopuser::find()->all();
-		if(isset($_POST['Shopuser'])){
-			$model->attributes = $_POST['Shopuser'];
-			$model->password = md5($_POST['Shopuser']['password']);
-			$model->shop_id = $session['shopid'];
-			$model->save();
-			return $this->redirect(['index']);
-		}
+		
+	
         return $this->render('index',['model'=>$model,'data'=>$data]);
     }
+	
+	public function actionSave(){
+	    $session = Yii::$app->session;
+		$session->open();
+		$data = json_decode(file_get_contents("php://input"));
+		$username =$data->uname;
+		$password = $data->pswd;
+		$usertype = $data->type;
+		$model = new Shopuser();
+		$model->username =  $username;
+		$model->password =  md5($password);
+		echo $model->type =  $usertype;
+		$model->shop_id =$session->get('shopid');
+		echo $session->get('shopid');
+		print_r($_SESSION);
+		$session['shopid'] = 4444;
+		echo $session['shopid'];
+		exit;
+		$model->save();
+	}
 
 }
 

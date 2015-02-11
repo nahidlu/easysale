@@ -41,8 +41,8 @@ class LoginController extends \yii\web\Controller
 	
     public function actionIndex()
     {	
-		$session = new Session;
-		$session->open();
+		//$session = new Session;
+		//$session->open();
 		
     	if (!\Yii::$app->user->isGuest) {
             //return $this->goHome();
@@ -51,7 +51,7 @@ class LoginController extends \yii\web\Controller
 
         $model = new AdminLoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-		  
+		//Yii::$app->session->set('aaa','abir');
         return $this->render('dashboard');
 		
         } else {

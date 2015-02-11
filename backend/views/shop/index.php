@@ -8,7 +8,8 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\Select2;
 use backend\models\Shop;
 use yii\db\Query;
-
+use yii\web\session;
+echo Yii::$app->session->get('aaa');exit;
 ?>
 <div class="row">
 

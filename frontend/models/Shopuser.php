@@ -31,6 +31,14 @@ class Shopuser extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+	 
+	 public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+	
     public function rules()
     {
         return [

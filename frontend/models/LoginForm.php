@@ -8,7 +8,7 @@ use yii\web\IdentityInterface;
 /**
  * Login form
  */
-class AdminLoginForm extends Model
+class LoginForm extends Model
 {
     public $username;
     public $password;
