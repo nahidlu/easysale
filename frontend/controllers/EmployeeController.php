@@ -13,6 +13,7 @@ class EmployeeController extends \yii\web\Controller
     {
 		
 		$model = new User;
+		
 		return $this->render('index',['model'=>$model]);
     }
 	
@@ -21,31 +22,44 @@ class EmployeeController extends \yii\web\Controller
 	public function actionTest(){
 		
 		$data = json_decode(file_get_contents("php://input"));
-		$username = $data->uname;
-		$password = $data->pswd;
-		$usertype = $data->type;
-		$model = new User();
-		$model->username =  $username;
-		$model->password =  md5($password);
-		$model->type =  $usertype;
-		
+		if(@$data->sn){
+			$model = User::findOne($data->sn);
+			$model->sn = $data->sn;
+		}else{
+			$model = new User();
+		}
+		$model->username =  $data->uname;
+		$model->password =  md5($data->pswd);
+		$model->type =  $data->type;
 		$model->shop_id = Yii::$app->session->get('shopid');
-		
 		if($model->save()){
 		$arr = array('msg' => "User Created Successfully !!!", 'error' => '');
+		//sleep(5);
         $jsn = json_encode($arr);
         print_r($jsn);
+		
 		}
+		
 	}
 	
 	public function actionView(){
 		
 			$data = User::find()->asArray()->all();
-			//print_r($datass);exit;
-			//$data = array()$datass;
-			//print_r($data[]);exit;
 			print json_encode($data);
 	}
+	
+	public function actionDelete(){
+		$data = json_decode(file_get_contents("php://input"));
+		$user = User::findOne($data->id);
+		$user->delete();
+		$arr = array('msg' => "User deleted Successfully !!!", 'error' => '');
+        $jsn = json_encode($arr);
+        print_r($jsn);
+		
+		
+	}
+	
+	
 
 }
 
