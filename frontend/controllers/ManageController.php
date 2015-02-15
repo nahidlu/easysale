@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class ManageController extends Controller
 {
+	public $enableCsrfValidation = false;
    /*  public function behaviors()
     {
         return [
@@ -32,11 +33,43 @@ class ManageController extends Controller
      */
     public function actionIndex()
     {
+		
 		$model = new Supplier;
-		
-		
-        return $this->render('index',['model'=>$model]);
+		return $this->render('index',['model'=>$model]);
     }
+	
+	public function actionSupplier(){
+		
+		$data = json_decode(file_get_contents("php://input"));
+		if(@$data->sn){
+			$model = Supplier::findOne($data->sn);
+			$model->SupplierID = $data->sn;
+		}else{
+			$model = new Supplier();
+		}
+		$model->SupplierName =  $data->sname;
+		$model->Address =  $data->address;
+		$model->ContactNo =  $data->contact;
+		$model->ContactPerson = $data->contactperson;
+		if($model->save()){
+		$arr = array('msg' => "Supplier Added Successfully !!!", 'error' => '');
+		//sleep(5);
+        $jsn = json_encode($arr);
+        print_r($jsn);
+		
+		}
+	}
+	
+	public function actionSupplierdelete(){
+		$data = json_decode(file_get_contents("php://input"));
+		$user = Supplier::findOne($data->id);
+		$user->delete();
+		$arr = array('msg' => "User deleted Successfully !!!", 'error' => '');
+        $jsn = json_encode($arr);
+        print_r($jsn);
+		
+		
+	}
 
     /**
      * Displays a single Supplier model.
@@ -49,6 +82,13 @@ class ManageController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+	
+	public function actionSupplierlist()
+	{
+			$data = Supplier::find()->asArray()->all();
+			//print_r($data);exit;
+			print json_encode($data);
+	}
 
     /**
      * Creates a new Supplier model.
