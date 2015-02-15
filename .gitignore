@@ -30,4 +30,5 @@ phpunit.phar
 /phpunit.xml
 
 # assets
-#/backend/assets
+ /backend/assets
+ /frontend/assets

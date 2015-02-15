@@ -57,13 +57,13 @@ use yii\widgets\ActiveForm;
 	</div>
 	<div class="col-md-6">
 	<h3>Supplier List</h3><hr>
-	<table class="table table-striped">
+	<table class="table table-striped" at-table at-paginated at-list="list" at-config="config">
 	<thead><tr><th>Supplier Name</th><th>Address</th><th>Contact No</th><th>Contact No</th><th>Action</th></tr></thead>
 	<tr ng-repeat="x in data">
-                        <td>{{x.SupplierName}}</td>
-                        <td>{{x.Address}}</td>
-                        <td>{{x.ContactNo}}</td>
-                        <td>{{x.ContactPerson}}</td>
+                        <td at-implicit at-sortable at-attribute="SupplierName">{{x.SupplierName}}</td>
+                        <td at-implicit at-sortable at-attribute="Address">{{x.Address}}</td>
+                        <td at-implicit at-sortable at-attribute="ContactNo">{{x.ContactNo}}</td>
+                        <td at-implicit at-sortable at-attribute="ContactPerson">{{x.ContactPerson}}</td>
                         <td>
 						
 							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.SupplierID)"></i>
@@ -74,6 +74,7 @@ use yii\widgets\ActiveForm;
                        
                     </tr>
 </table>
+<at-pagination at-list="list" at-config="config"></at-pagination>
 	</div>
 </div>
 </div>
@@ -161,9 +162,18 @@ var manageModule = angular.module('manage', []);
 			})
 				
             }
+			
+			
+			
  
  }]);
-	
+angular.module("manageModule").controller("supplierController", ["$scope", function($scope) {
+  $scope.list = $scope.$parent.personList
+  $scope.config = {
+    itemsPerPage: 5,
+    fillLastPage: true
+  }
+}]);	
 manageModule.directive('ngConfirmClick', [
 function(){
  return {
