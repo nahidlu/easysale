@@ -36,7 +36,7 @@ AppAsset::register($this);
 					// ['label' => 'Create Shop', 'url' => ['/shop/index']],
 					
 					['label' => 'Employee', 'url' => ['/employee/index']],
-					['label' => 'Project', 'url' => ['/project/index']],
+					['label' => 'Manage', 'url' => ['/manage/index']],
 					['label' => 'Attendance', 'url' => ['/attendance/index']],
 					['label' => 'Invoice', 'url' => ['/invoice/index']]
 				];

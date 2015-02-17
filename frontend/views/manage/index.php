@@ -7,23 +7,28 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Supplier */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/jquery.dataTables.min.js' ?>"></script>
+
+
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/angular-datatables.min.js' ?>"></script>
+<link rel="stylesheet" type="text/css" href="http://angular-ui.github.com/ng-grid/css/ng-grid.css" />
 <div role="tabpanel" ng-app="manage">
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Products</a></li>
+ 
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
+    <div role="tabpanel" class="tab-pane fade in active" id="home">
 	<div class="row" ng-controller="supplierController">
 	<div class="col-md-6">
-	<h3>Add Supplier</h3><hr>
+	<h3><i class="glyphicon glyphicon-user"></i> Add Supplier</h3><hr>
 	<span ng-show="loading">Loading.......</span>
 	<div class="supplier-form">
 	<form name="supForm" novalidate>
@@ -56,14 +61,14 @@ use yii\widgets\ActiveForm;
 	</div>
 	</div>
 	<div class="col-md-6">
-	<h3>Supplier List</h3><hr>
-	<table class="table table-striped" at-table at-paginated at-list="list" at-config="config">
+	<h3> <i class="glyphicon glyphicon-user"></i>  Supplier List</h3><hr>
+	<table  datatable="ng" class="table table-striped">
 	<thead><tr><th>Supplier Name</th><th>Address</th><th>Contact No</th><th>Contact No</th><th>Action</th></tr></thead>
 	<tr ng-repeat="x in data">
-                        <td at-implicit at-sortable at-attribute="SupplierName">{{x.SupplierName}}</td>
-                        <td at-implicit at-sortable at-attribute="Address">{{x.Address}}</td>
-                        <td at-implicit at-sortable at-attribute="ContactNo">{{x.ContactNo}}</td>
-                        <td at-implicit at-sortable at-attribute="ContactPerson">{{x.ContactPerson}}</td>
+                        <td >{{x.SupplierName}}</td>
+                        <td >{{x.Address}}</td>
+                        <td >{{x.ContactNo}}</td>
+                        <td >{{x.ContactPerson}}</td>
                         <td>
 						
 							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.SupplierID)"></i>
@@ -73,21 +78,109 @@ use yii\widgets\ActiveForm;
 						</td>
                        
                     </tr>
-</table>
-<at-pagination at-list="list" at-config="config"></at-pagination>
+</table> 
+<!--<div class="table table-striped" ng-grid="gridOptions"></div>-->
 	</div>
 </div>
 </div>
-    <div role="tabpanel" class="tab-pane" id="profile">How</div>
-    <div role="tabpanel" class="tab-pane" id="messages">Are</div>
-    <div role="tabpanel" class="tab-pane" id="settings">You</div>
+ <div role="tabpanel" class="tab-pane fade" id="profile">
+<div class="row" >
+	<div class="col-md-6">
+	<div ng-controller="productController">
+	<h4><i class="glyphicon glyphicon-queen"></i> Product Category</h4><hr>
+<div class="alert in alert-block fade alert-success" ng-repeat="msg in msgs"> {{ msg}} </div>
+            
+	<form name="productForm" novalidate>
+	
+	<div class="form-group" ng-class="{true: 'error'}[submitted && productForm.pname.$invalid]">
+		<label >Product Category Name</label>
+		<input type="text" class="form-control"  ng-model="pname" name="pname"  placeholder="Product Category Name" required>
+		<span ng-show="productForm.pname.$dirty && productForm.pname.$error.required" style="color:red">Product Category Name is required</span>
+	  </div>
+	 <input type="hidden" class="form-control"  ng-model="id" >
+	 <button class="btn btn-success" ng-click='Save();' ng-disabled="productForm.$invalid"  type="button" >Submit</button>
+	</form><hr>
+	
+	<table  datatable="ng" class="table table-striped">
+	<thead><tr><th>Product Category Name</th><th>Action</th></tr></thead>
+	<tr ng-repeat="x in data">
+                        <td >{{x.CategoryName}}</td>
+                       <td>
+						
+							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.CategoryID)"></i>
+							
+							  <i ng-click="deleteUser(x.CategoryID)" ng-confirm-click="Are you sure you want to delete this?" class="glyphicon glyphicon-trash" ></i>
+							
+						</td>
+                       
+                    </tr>
+</table> 
+		</div></div>
+	
+	<div class="col-md-6">
+	<h4><i class="glyphicon glyphicon-queen"></i> Product Name</h4><hr>
+	<div ng-controller="productnameController">
+		<div class="alert in alert-block fade alert-success" ng-repeat="msg in msgs"> {{ msg}} </div>
+    
+	<form name="productCategoryForm" novalidate>
+	<div class="form-group" ng-class="{true: 'error'}[submitted && productCategoryForm.catname.$invalid]">
+		<label >Select Category Name</label>
+		<select name="catname" ng-model="catname" class="form-control" required>
+			  <?php echo $line; ?>
+		</select>
+		<span ng-show="productCategoryForm.catname.$dirty && productCategoryForm.catname.$error.required" style="color:red">Product Category Name is required</span>
+	</div>
+	 <div class="form-group" ng-class="{true: 'error'}[submitted && productCategoryForm.pdname.$invalid]">
+		<label >Product Name</label>
+		<input type="text" name="pdname" ng-model="pdname" class="form-control"  placeholder="Product Name"  required>
+		<input type="hidden" name="id" ng-model="id" class="form-control" >
+		<span ng-show="productCategoryForm.pdname.$dirty && productCategoryForm.pdname.$error.required" style="color:red">Product Name is required</span>
+	  </div>
+	 <div class="form-group" >
+		<label for="exampleInputEmail1">Product ID</label><div class="clearfix"></div>
+		<input type="text" style="width: 95%;float: left;margin-right: 5px" class="form-control"  ng-model="productid" id="exampleInputEmail1" placeholder="Enter Product ID" disabled>
+		<span><input type="checkbox" id="inputSuccess1"></span>
+	  </div>
+	  
+	 <button class="btn btn-success" ng-click='Sendd();' ng-disabled="productCategoryForm.$invalid"  type="button" >Submit</button>
+  </form><hr>
+  <table  datatable="ng" class="table table-striped">
+	<thead><tr><th>Product Name</th><th>Product ID</th><th>Action</th></tr></thead>
+	<tr ng-repeat="x in data">
+                        <td >{{x.ProductName}}</td>
+                        <td >{{x.ProductID}}</td>
+                       <td>
+						
+							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.sn)"></i>
+							
+							  <i ng-click="deleteUser(x.sn)" ng-confirm-click="Are you sure you want to delete this?" class="glyphicon glyphicon-trash" ></i>
+							
+						</td>
+                       
+                    </tr>
+</table> 
+	</div>
+	</div>
+	
+
+</div>
+    
   </div>
 
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+
 <script type="text/javascript">
-var manageModule = angular.module('manage', []);
+$("#inputSuccess1").click(function() {
+
+   if ($('#inputSuccess1').is(':checked') == true){
+        $("#exampleInputEmail1").removeAttr('disabled');
+       
+    } else {
+        $('#exampleInputEmail1').attr('disabled',!this.checked);
+    }
+});
+var manageModule = angular.module('manage', ['datatables']);
  manageModule.controller('supplierController', ['$scope', '$http', function($scope, $http) {
  
 				$scope.errors = [];
@@ -162,18 +255,161 @@ var manageModule = angular.module('manage', []);
 			})
 				
             }
-			
-			
+	
 			
  
  }]);
-angular.module("manageModule").controller("supplierController", ["$scope", function($scope) {
-  $scope.list = $scope.$parent.personList
-  $scope.config = {
-    itemsPerPage: 5,
-    fillLastPage: true
-  }
-}]);	
+  manageModule.controller('productController', ['$scope', '$http', function($scope, $http) {
+	$scope.errors = [];
+                $scope.msgs = [];
+				$scope.loading = false;
+					
+			
+ 
+   $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategorylist') ?>")
+								.success(function(response) {$scope.data = response;});
+
+                $scope.Save = function() {
+					
+					submitted=true;
+                    $scope.errors.splice(0, $scope.errors.length); // remove all error messages
+                    $scope.msgs.splice(0, $scope.msgs.length);
+					$scope.loading = true;
+						
+                    $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategory') ?>", {"pname": $scope.pname,"sn": $scope.id}
+					
+                    ).success(function(data, status, headers, config) {
+                        if (data.msg != "")
+                        {
+							
+								$scope.loading = false;
+                             $scope.msgs.push(data.msg);
+							  $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategorylist') ?>")
+								.success(function(response) {$scope.data = response;});
+                        }
+                        else
+                        {
+                             $scope.emsgs.push(data.ermsg);
+                        }
+                    }).error(function(data, status) { 
+                        $scope.errors.push(status);
+                    });
+                }	
+				
+					$scope.editUser = function(id) {					
+					$scope.edit = false;
+					var keepGoing =true;
+						 angular.forEach($scope.data,function(jdata)
+						{
+							if(keepGoing){
+								if(jdata.CategoryID == id)
+								{
+									$scope.pname = jdata.CategoryName	;
+								
+									$scope.id = jdata.CategoryID;
+									keepGoing = false;
+										
+								
+								}
+							}
+							
+						} 
+						
+					)
+			}
+			
+			$scope.deleteUser = function(id) {					
+				 $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategorydelete') ?>", {"id": id}
+                    ).success(function(data, status, headers, config) {
+                        $scope.msgs.push(data.msg);
+							  $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategorylist') ?>")
+								.success(function(response) {$scope.data = response;});  	
+			})
+				
+            }
+	
+}])
+ 
+ manageModule.controller('productnameController', ['$scope', '$http', function($scope, $http) {
+ 
+				$scope.errors = [];
+                $scope.msgs = [];
+				$scope.loading = false;
+					 $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productnamelist') ?>")
+					.success(function(response) {$scope.data = response;});
+				
+				
+                $scope.Sendd = function() {
+					
+					submitted=true;
+                    $scope.errors.splice(0, $scope.errors.length); // remove all error messages
+                    $scope.msgs.splice(0, $scope.msgs.length);
+					$scope.loading = true;
+						
+                    $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('manage/addproductname') ?>", {"cname": $scope.catname, "productname": $scope.pdname, "pid": $scope.productid,"sn":$scope.id}
+					
+                    ).success(function(data, status, headers, config) {
+                        if (data.msg != "")
+                        {
+							
+								$scope.loading = false;
+                            $scope.msgs.push(data.msg);
+							 $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productnamelist') ?>")
+					.success(function(response) {$scope.data = response;});
+                        }
+                        else
+                        {
+                             $scope.emsgs.push(data.ermsg);
+                        }
+                    }).error(function(data, status) { 
+                        $scope.errors.push(status);
+                    });
+                }
+				
+				 $scope.edit = true;
+				$scope.error = false;
+				$scope.incomplete = false; 
+				//$scope.data = [];
+
+				$scope.editUser = function(id) {					
+					$scope.edit = false;
+					var keepGoing =true;
+						 angular.forEach($scope.data,function(jdata)
+						{
+							if(keepGoing){
+								if(jdata.sn == id)
+								{
+									$scope.catname = jdata.CategoryID;
+									$scope.pdname = jdata.ProductName; 
+									$scope.productid = jdata.ProductID;
+									
+									$scope.id = jdata.sn;
+									keepGoing = false;
+										
+								
+								}
+							}
+							
+						} 
+						
+					)
+			}
+			
+			$scope.deleteUser = function(id) {					
+				 $http.post("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productnamedelete') ?>", {"id": id}
+                    ).success(function(data, status, headers, config) {
+                        $scope.msgs.push(data.msg);
+							  $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productnamelist') ?>")
+					.success(function(response) {$scope.data = response;});
+			})
+				
+            }
+	
+			
+ 
+ }]);
+ 
+ 
 manageModule.directive('ngConfirmClick', [
 function(){
  return {

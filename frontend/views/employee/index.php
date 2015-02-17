@@ -11,7 +11,13 @@ use backend\models\Shop;
 use yii\db\Query;
 
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/jquery.dataTables.min.js' ?>"></script>
+
+
+
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/angular-datatables.min.js' ?>"></script>
 <div ng-app="manageEmployee">
 <div class="row" ng-controller="FrmController">
 
@@ -59,7 +65,7 @@ use yii\db\Query;
 <h3>Manage Shop</h3><hr>
 
 <div >
-<table class="table table-striped">
+<table datatable="ng" class="table table-striped">
 	<thead><tr><th>Username</th><th>User Type</th><th>Action</th></tr></thead>
 	<tr ng-repeat="x in data">
                         <td>{{x.username}}</td>
@@ -82,9 +88,9 @@ use yii\db\Query;
 </div>
 </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+
 <script type="text/javascript">
-var employeeModule = angular.module('manageEmployee', []);
+var employeeModule = angular.module('manageEmployee', ['datatables']);
  employeeModule.controller('FrmController', ['$scope', '$http', function($scope, $http) {
  
 				$scope.errors = [];

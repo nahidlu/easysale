@@ -1,21 +1,41 @@
-<?php
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 
-use yii\helpers\Html;
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/jquery.dataTables.min.js' ?>"></script>
 
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Supplier */
+<script src="<?php echo Yii::$app->request->baseUrl.'/js/angular-datatables.min.js' ?>"></script>
 
-$this->title = 'Create Supplier';
-$this->params['breadcrumbs'][] = ['label' => 'Suppliers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="supplier-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+<div ng-app="Testmd" ng-controller="AngularWayCtrl">
+    <table  datatable="ng" class="table table-striped">
+        <thead>
+        <tr>
+           <th>Category Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="person in persons">
+            <td>{{ person.CategoryName }}</td>
+            <td>Action</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+
+
+
+
+<script type="text/javascript">
+
+angular.module('Testmd', ['datatables'])
+.controller('AngularWayCtrl', AngularWayCtrl);
+
+function AngularWayCtrl($http,$scope) {
+ 
+   $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('manage/productcategorylist') ?>")
+								.success(function(response) {$scope.persons = response;});
+}
+
+
+</script>
