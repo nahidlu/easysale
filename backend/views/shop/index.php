@@ -9,7 +9,7 @@ use kartik\widgets\Select2;
 use backend\models\Shop;
 use yii\db\Query;
 use yii\web\session;
-echo Yii::$app->session->get('aaa');exit;
+
 ?>
 <div class="row">
 
@@ -71,7 +71,7 @@ echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td
 									 \mcms\xeditable\XEditableText::widget([
 										'model' => $value,
 										'placement' => 'right',
-										'url'=>'shop/updateusername',
+										'url'=>'updateusername',
 										'pluginOptions' => [
 											'name' => $value['username'],
 											'id'=> $value['ShopID'],
@@ -85,7 +85,7 @@ echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td
 												}
 											')
 										]
-									])."</td><td><a href='".Yii::$app->urlManager->createUrl(['shop/edit', 'id' =>$value['ShopID']])."'><i class='glyphicon glyphicon-edit'></i></a></td></tr>"; 
+									])."</td><td><a href='".Yii::$app->urlManager->createUrl(['shop/edit', 'id' =>$value['id']])."'><i class='glyphicon glyphicon-edit'></i></a></td></tr>"; 
 									} ?>
 </table>
 </div>

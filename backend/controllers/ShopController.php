@@ -12,12 +12,16 @@ class ShopController extends \yii\web\Controller
 {
     public function actionIndex()
     {
+		
 		$model = new Shop();
 		$connection = \Yii::$app->db;
-		$data = $connection->createCommand('SELECT tbl_shop.ShopID,ShopName,ContactPerson,ContactNo,tbl_shopuser.shop_id,username from tbl_shop,tbl_shopuser where tbl_shop.ShopID = tbl_shopuser.shop_id');
-		$users = $data->queryAll();
+		$data = $connection->createCommand('SELECT tbl_shop.id,ShopID,ShopName,ContactPerson,ContactNo,tbl_shopuser.shop_id,username from tbl_shop,tbl_shopuser where tbl_shop.ShopID = tbl_shopuser.shop_id');
 		
+		$users = $data->queryAll();
+		//echo "<pre>";
+		//print_R($users);exit;
 		if(isset($_POST['Shop'])){
+				
 		$model->attributes = $_POST['Shop'];
 		$unid = $model->guid();
 		$model->ShopID = $unid;
@@ -37,8 +41,9 @@ class ShopController extends \yii\web\Controller
 	
 	public function actionEdit(){
 		$connection = \Yii::$app->db;
-		$data = $connection->createCommand('SELECT tbl_shop.ShopID,ShopName,ContactPerson,ContactNo,tbl_shopuser.shop_id,username from tbl_shop,tbl_shopuser where tbl_shop.ShopID = tbl_shopuser.shop_id');
+		$data = $connection->createCommand('SELECT tbl_shop.id,ShopID,ShopName,ContactPerson,ContactNo,tbl_shopuser.shop_id,username from tbl_shop,tbl_shopuser where tbl_shop.ShopID = tbl_shopuser.shop_id');
 		$users = $data->queryAll();
+		
 		$id= $_GET['id'];	
 		$model = $this->findModel($id);
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -52,7 +57,7 @@ class ShopController extends \yii\web\Controller
 	}
 	protected function findModel($id)
     {
-        $model = Shop::find()->where(['ShopID' => $id])->one();
+        $model = Shop::find()->where(['id' => $id])->one();
 		return $model;
     }
 	
