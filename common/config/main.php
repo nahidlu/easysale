@@ -7,32 +7,23 @@ return [
         ],
 		/* 'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=arrowsoft_software',
+            'dsn' => 'mysql:host=localhost;dbname=easysaledb',
             'username' => 'root',
             'password' => '',
-            'enableSchemaCache' => true,
-			
-            // Duration of schema cache.
-            // 'schemaCacheDuration' => 3600,
-
-            // Name of the cache component used. Default is 'cache'.
-            //'schemaCache' => 'cache',
+            'charset' => 'utf8',
+			'tablePrefix'=>'tbl_'
         ], */
-		'db' => [
+		
+		 /* 'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=arrowapp',
-            'username' => 'arrowapp',
-            'password' => 'U_q;*XZ4?1u~',
-            'enableSchemaCache' => true,
-			
-            // Duration of schema cache.
-            //'schemaCacheDuration' => 3600,
-
-            // Name of the cache component used. Default is 'cache'.
-            //'schemaCache' => 'cache',
-        ],
-        'cache' => [
+            'dsn' => 'mysql:host=localhost;dbname=easysale',
+            'username' => 'easysale',
+            'password' => 'easysale!#?',
+            'charset' => 'utf8',
+			'tablePrefix'=>'tbl_'
+        ], */
+        /* 'cache' => [
             'class' => 'yii\caching\FileCache',
-        ],
+        ], */
     ],
 ];
