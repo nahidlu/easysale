@@ -4,12 +4,14 @@ namespace backend\controllers;
 use backend\models\AdminUser;
 use backend\models\Shop;
 use backend\models\Shopuser;
+use backend\models\Shopowner;
 use yii\web\session;
 use yii;
 use yii\db\Query;
 
 class ShopController extends \yii\web\Controller
 {
+	public $enableCsrfValidation = false;
     public function actionIndex()
     {
 		
@@ -38,6 +40,68 @@ class ShopController extends \yii\web\Controller
 		}
         return $this->render('index',['model'=>$model,'users'=>$users]);
     }
+	
+	//Create shop owner 
+    public function actionCreateowner()
+    {
+		$model = new Shopowner();
+		$data = json_decode(file_get_contents("php://input"));
+		$model->name = $data->name;
+		$model->address = $data->address;
+		$model->phone = $data->phone;
+		$model->business_name = $data->business_name;
+		$model->status = $data->status;
+		$model->created_at = date('Y-m-d');
+		if($model->save())
+		{
+			$response["status"]='success';
+			$response["message"] = 'Product added successfully.';
+			$response["data"]=(int)$model->owner_id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+		else
+		{
+			print_r($model->getErrors());exit;
+			$response["status"]='error';
+			$response["message"] = '';
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+		
+    }
+    public function actionListowners()
+    {
+		$response =array();
+		$query = Shopowner::find()
+			//->orderBy('ID DESC')
+			->asArray()
+			->all();
+			//print_r($query);exit;
+			$response["data"]=$query;
+			$response["status"]="success";
+			$response["message"] = "Product removed successfully.";
+			header('Content-type: application/json');
+			echo json_encode($response);
+    }
+	
+	public function actionChangestatus()
+	{
+		$data = json_decode(file_get_contents("php://input"));
+		$query = Shopowner::updateAll(['status' => $data->status], 'owner_id = '.$data->id);
+		
+		if($query)
+		{
+			$response["status"]='success';
+			$response["message"] = 'Status changed successfully.';
+			//$response["data"]=(int)$model->id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+	}
+	
 	
 	public function actionEdit(){
 		$connection = \Yii::$app->db;

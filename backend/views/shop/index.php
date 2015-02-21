@@ -23,7 +23,6 @@ use yii\web\session;
 <div ng-cloak="" ng-app="shopOwner" class="row">
 
 	<div class="col-md-12">
-		<h3>Shop Owners</h3><hr>
 	    <div class="page-content">
 	      <div ng-view="" id="ng-view"></div>
 	    </div>
@@ -114,7 +113,7 @@ echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/app.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/data.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/directives.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/productsCtrl.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/shopOwnerCtrl.js"></script>
 
 <!-- Some Bootstrap Helper Libraries -->
 

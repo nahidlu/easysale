@@ -1,12 +1,12 @@
-app.controller('productsCtrl', function ($scope, $modal, $filter, Data) {
+app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
     $scope.product = {};
 	//$scope.title =null;
-    Data.get('ngdemolist').then(function(data){
+    Data.get('listowners').then(function(data){
         $scope.products = data.data;
     });
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="Active" ? "Inactive" : "Active");
-        Data.post("changestatus",{status:product.status,id:product.id});
+        Data.post("changestatus",{status:product.status,id:product.owner_id});
     };
     $scope.deleteProduct = function(product){
         if(confirm("Are you sure to remove the product")){
@@ -17,8 +17,8 @@ app.controller('productsCtrl', function ($scope, $modal, $filter, Data) {
     };
     $scope.open = function (p,size) {
 	      var modalInstance = $modal.open({
-          templateUrl: '../app/shops/partials/productEdit.html',
-          controller: 'productEditCtrl',
+          templateUrl: '../app/shops/partials/ownerEdit.html',
+          controller: 'shopownerEditCtrl',
           size: size,
           resolve: {
             item: function () {
@@ -29,12 +29,11 @@ app.controller('productsCtrl', function ($scope, $modal, $filter, Data) {
         modalInstance.result.then(function(selectedObject) {
             if(selectedObject.save == "insert"){
                 $scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'id', 'reverse');
+                $scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
             }else if(selectedObject.save == "update"){
-                p.description = selectedObject.description;
-                p.price = selectedObject.price;
-                p.stock = selectedObject.stock;
-                p.packing = selectedObject.packing;
+                p.address = selectedObject.address;
+                p.phone = selectedObject.phone;
+                p.business_name = selectedObject.business_name;
             }
         });
     };
@@ -42,10 +41,9 @@ app.controller('productsCtrl', function ($scope, $modal, $filter, Data) {
  $scope.columns = [
                     {text:"ID",predicate:"id",sortable:true,dataType:"number"},
                     {text:"Name",predicate:"name",sortable:true},
-                    {text:"Price",predicate:"price",sortable:true},
-                    {text:"Stock",predicate:"stock",sortable:true},
-                    {text:"Packing",predicate:"packing",reverse:true,sortable:true,dataType:"number"},
-                    {text:"Description",predicate:"description",sortable:true},
+                    {text:"PHONE",predicate:"phone",sortable:true},
+                    {text:"BUSINESS NAME",predicate:"business",sortable:true},
+                    {text:"ADDESS",predicate:"address",sortable:true},
                     {text:"Status",predicate:"status",sortable:true},
                     {text:"Action",predicate:"",sortable:false}
                 ];
@@ -53,15 +51,15 @@ app.controller('productsCtrl', function ($scope, $modal, $filter, Data) {
 });
 
 
-app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) {
+app.controller('shopownerEditCtrl', function ($scope, $modalInstance, item, Data) {
 
   $scope.product = angular.copy(item);
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.id > 0) ? 'Edit Product' : 'Add Product';
-        $scope.buttonText = (item.id > 0) ? 'Update Product' : 'Add New Product';
+        $scope.title = (item.owner_id > 0) ? 'Edit Owner' : 'Add Owner';
+        $scope.buttonText = (item.owner_id > 0) ? 'Update Owner' : 'Add New Owner';
 
         var original = item;
         $scope.isClean = function() {
@@ -69,7 +67,7 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) 
         }
         $scope.saveProduct = function (product) {
             product.uid = $scope.uid;
-            if(product.id > 0){
+            if(product.owner_id > 0){
                 Data.post('update/', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
@@ -81,11 +79,11 @@ app.controller('productEditCtrl', function ($scope, $modalInstance, item, Data) 
                 });
             }else{
                 product.status = 'Active';
-                Data.post('submitproject', product).then(function (result) {
+                Data.post('createowner', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'insert';
-                        x.id = result.data;						
+                        x.owner_id = result.data;						
                         $modalInstance.close(x);
                     }else{
                         console.log(result);
