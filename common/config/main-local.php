@@ -14,7 +14,7 @@ return [
 	    ],
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=easysaledb',
+            'dsn' => 'mysql:host=localhost;dbname=easysale',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
