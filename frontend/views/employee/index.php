@@ -116,8 +116,8 @@ var employeeModule = angular.module('manageEmployee', ['datatables']);
 								$scope.loading = false;
                             $scope.msgs.push(data.msg);
 							  $http.get("<?php echo Yii::$app->getUrlManager()->createUrl('employee/view') ?>")
-								.success(function(response) {$scope.data = response;});
-                        }
+					.success(function(response) {$scope.data = response;});
+						}
                         else
                         {
                              $scope.emsgs.push(data.ermsg);
