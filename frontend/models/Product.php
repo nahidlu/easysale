@@ -29,9 +29,8 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-          //  [['SN', 'ProductID'], 'required'],
-          //  [['sn', 'CategoryID', 'BarcodeNeeded'], 'integer'],
-           // [['ProductID'], 'string', 'max' => 50],
+			[['SN', 'ProductID','ProductName','CategoryID'], 'required'],
+          
             [['ProductName'], 'string', 'max' => 100]
         ];
     }
