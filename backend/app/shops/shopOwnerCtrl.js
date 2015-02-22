@@ -10,8 +10,8 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
     };
     $scope.deleteProduct = function(product){
         if(confirm("Are you sure to remove the product")){
-            Data.post("delete",product).then(function(result){
-                $scope.products = _.without($scope.products, _.findWhere($scope.products, {id:product.id}));
+            Data.post("deleteowner",product).then(function(result){
+                $scope.products = _.without($scope.products, _.findWhere($scope.products, {owner_id:product.owner_id}));
             });
         }
     };
@@ -68,7 +68,7 @@ app.controller('shopownerEditCtrl', function ($scope, $modalInstance, item, Data
         $scope.saveProduct = function (product) {
             product.uid = $scope.uid;
             if(product.owner_id > 0){
-                Data.post('update/', product).then(function (result) {
+                Data.post('updateowner', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'update';
