@@ -19,8 +19,9 @@ use yii\web\session;
 <link rel="stylesheet" href="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/css/custom.css" type="text/css" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<sction ng-cloak="" ng-app="shopOwner" >
 <!-- Shop owner app section starts here  -->
-<div ng-cloak="" ng-app="shopOwner" class="row">
+<div class="row">
 
 	<div class="col-md-12">
 	    <div class="page-content">
@@ -30,6 +31,7 @@ use yii\web\session;
 </div>
 <!-- shop owner app ends here -->
 
+</section>
 <div class="row">
 
 <div class="col-md-6">
@@ -114,7 +116,7 @@ echo "<tr><td>".$value['ShopName']."</td><td>".$value['ContactPerson']."</td><td
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/data.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/directives.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/shopOwnerCtrl.js"></script>
-
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shops/shopCtrl.js"></script>
 <!-- Some Bootstrap Helper Libraries -->
 
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/underscore.min.js"></script>

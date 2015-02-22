@@ -5,7 +5,7 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
         $scope.products = data.data;
     });
     $scope.changeProductStatus = function(product){
-        product.status = (product.status=="Active" ? "Inactive" : "Active");
+        product.status = (product.status=="1" ? "0" : "1");
         Data.post("changestatus",{status:product.status,id:product.owner_id});
     };
     $scope.deleteProduct = function(product){
@@ -78,7 +78,7 @@ app.controller('shopownerEditCtrl', function ($scope, $modalInstance, item, Data
                     }
                 });
             }else{
-                product.status = 'Active';
+                product.status = 1;
                 Data.post('createowner', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
@@ -86,7 +86,8 @@ app.controller('shopownerEditCtrl', function ($scope, $modalInstance, item, Data
                         x.owner_id = result.data;						
                         $modalInstance.close(x);
                     }else{
-                        console.log(result);
+                        //console.log(result);
+						$scope.suberr=result.error;
                     }
                 });
             }

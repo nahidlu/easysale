@@ -49,7 +49,7 @@ class ShopController extends \yii\web\Controller
 		$model->name = $data->name;
 		$model->address = $data->address;
 		$model->phone = $data->phone;
-		$model->business_name = $data->business_name;
+		$model->business_name = @$data->business_name;
 		$model->status = $data->status;
 		$model->created_at = date('Y-m-d');
 		if($model->save())
@@ -63,9 +63,9 @@ class ShopController extends \yii\web\Controller
 		}
 		else
 		{
-			print_r($model->getErrors());exit;
 			$response["status"]='error';
 			$response["message"] = '';
+			$response["error"] = $model->getErrors();
 			header('Content-type: application/json');
 			echo json_encode($response,JSON_NUMERIC_CHECK);
 		}
