@@ -1,6 +1,11 @@
 app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
     $scope.product = {};
 	//$scope.title =null;
+	$scope.config = {
+	    itemsPerPage: 5,
+	    fillLastPage: true
+	  }
+
     Data.get('listowners').then(function(data){
         $scope.products = data.data;
     });
@@ -27,9 +32,13 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
           }
         });
         modalInstance.result.then(function(selectedObject) {
+
             if(selectedObject.save == "insert"){
-                $scope.products.push(selectedObject);
+               
+			    //$scope.products.splice(0,0,selectedObject);
+				$scope.products.push(selectedObject);
                 $scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
+				
             }else if(selectedObject.save == "update"){
                 p.address = selectedObject.address;
                 p.phone = selectedObject.phone;
@@ -39,7 +48,7 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
     };
     
  $scope.columns = [
-                    {text:"ID",predicate:"id",sortable:true,dataType:"number"},
+                    {text:"ID",predicate:"owner_id",sortable:true,dataType:"number"},
                     {text:"Name",predicate:"name",sortable:true},
                     {text:"PHONE",predicate:"phone",sortable:true},
                     {text:"BUSINESS NAME",predicate:"business",sortable:true},

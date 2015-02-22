@@ -79,9 +79,10 @@ class ShopController extends \yii\web\Controller
 			->asArray()
 			->all();
 			//print_r($query);exit;
-			$response["data"]=$query;
+			
 			$response["status"]="success";
-			$response["message"] = "Product removed successfully.";
+			$response["message"] = "Product listed successfully.";
+			$response["data"]=$query;
 			header('Content-type: application/json');
 			echo json_encode($response);
     }
