@@ -34,11 +34,11 @@ use yii\web\session;
 </section>
 
 <!-- AngularJS custom codes -->
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shop/app.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shop/data.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shop/directives.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shop/shopListCtrl.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shop/shopCtrl.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shopsowner/app.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shopsowner/data.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shopsowner/directives.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shopsowner/shopOwnerCtrl.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/shopsowner/shopCtrl.js"></script>
 <!-- Some Bootstrap Helper Libraries -->
 
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/underscore.min.js"></script>
