@@ -8,11 +8,6 @@ app.config(['$routeProvider',
       templateUrl: '../app/shops/partials/shopowners.html',
       controller: 'shopownerCtrl'
     })
-	.when('/addshop', {
-      title: 'Products',
-      templateUrl: '../app/shops/partials/shops.html',
-      controller: 'shopCtrlr'
-    })
     .otherwise({
       redirectTo: '/'
     });;

@@ -18,7 +18,7 @@ use yii\web\session;
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/angular-animate.min.js"></script>
 <link rel="stylesheet" href="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/css/custom.css" type="text/css" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
 <sction ng-cloak="" ng-app="shopOwner" >
 <!-- Shop owner app section starts here  -->
 <div class="row">

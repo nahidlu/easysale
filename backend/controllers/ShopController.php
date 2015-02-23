@@ -79,9 +79,10 @@ class ShopController extends \yii\web\Controller
 			->asArray()
 			->all();
 			//print_r($query);exit;
-			$response["data"]=$query;
+			
 			$response["status"]="success";
-			$response["message"] = "Product removed successfully.";
+			$response["message"] = "Product listed successfully.";
+			$response["data"]=$query;
 			header('Content-type: application/json');
 			echo json_encode($response);
     }
@@ -102,6 +103,51 @@ class ShopController extends \yii\web\Controller
 		}
 	}
 	
+	public function actionDeleteowner()
+	{
+		$data = json_decode(file_get_contents("php://input"));
+		$query = Shopowner::deleteAll('owner_id='.$data->owner_id);
+		if($query)
+		{
+			$response["status"]='success';
+			$response["message"] = 'Owner deleted successfully.';
+			//$response["data"]=(int)$model->id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+	}
+	
+	public function actionUpdateowner()
+	{
+		
+		$data = json_decode(file_get_contents("php://input"));
+		//echo $data->id;exit;
+		$model = Shopowner::findOne($data->owner_id);
+		$model->name = $data->name;
+		$model->address = $data->address;
+		$model->phone = $data->phone;
+		$model->business_name = @$data->business_name;
+		$model->status = $data->status;
+		$model->updated_at = date('Y-m-d');
+		if($model->save())
+		{
+			$response["status"]='success';
+			$response["message"] = 'Owner updated successfully.';
+			$response["data"]=(int)$model->owner_id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+		else
+		{
+			$response["status"]='error';
+			$response["message"] = '';
+			$response["error"] = $model->getErrors();
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+	}
 	
 	public function actionEdit(){
 		$connection = \Yii::$app->db;
