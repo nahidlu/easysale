@@ -33,12 +33,9 @@ AppAsset::register($this);
             ]);
 			if (!Yii::$app->user->isGuest) {
 				$menuItems = [
+					['label' => 'Create Shop Owners', 'url' => ['/shopowner/index']],
 					['label' => 'Create Shop', 'url' => ['/shop/index']],
-					['label' => 'Transactions', 'url' => ['/transactions/index']],
-					['label' => 'Employee', 'url' => ['/employees/index']],
-					['label' => 'Project', 'url' => ['/project/index']],
-					['label' => 'Attendance', 'url' => ['/attendance/index']],
-					['label' => 'Invoice', 'url' => ['/invoice/index']]
+					
 				];
 			}
             if (Yii::$app->user->isGuest) {

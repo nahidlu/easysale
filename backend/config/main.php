@@ -12,7 +12,14 @@ return [
     'controllerNamespace' => 'backend\controllers',
 	'defaultRoute' => 'login',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+	'gii' => [
+      'class' => 'yii\gii\Module', //adding gii module
+      'allowedIPs' => ['127.0.0.1', '::1']  //allowing ip's 
+    ],
+	
+	
+	],
     'components' => [
         'user' => [
             'identityClass' => 'backend\models\AdminUser',
