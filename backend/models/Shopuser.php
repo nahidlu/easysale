@@ -29,9 +29,8 @@ class Shopuser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shop_id', 'username', 'password', 'type'], 'required'],
-            [['type'], 'integer'],
-            [['shop_id', 'username', 'password'], 'string', 'max' => 255]
+            [['username', 'password'], 'required'],
+            [['emp_id', 'status', 'created_at','shop_id','type'], 'safe'],
         ];
     }
 

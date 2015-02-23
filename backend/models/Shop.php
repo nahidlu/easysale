@@ -35,7 +35,7 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Address1', 'Address2', 'Logo', 'Slogan'], 'string'],
+            [['Address1','Logo', 'Slogan'], 'string'],
             [['owner_id', 'shop_type', 'status'], 'required'],
             [['owner_id', 'status'], 'integer'],
             [['ShopName', 'owner_name'], 'string', 'max' => 100],

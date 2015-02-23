@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2015 at 08:21 AM
+-- Generation Time: Feb 23, 2015 at 04:24 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -224,13 +224,20 @@ CREATE TABLE IF NOT EXISTS `tbl_lowstockwarning` (
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_product` (
-  `SN` bigint(20) NOT NULL,
+  `sn` int(11) NOT NULL AUTO_INCREMENT,
   `ProductID` varchar(50) NOT NULL,
   `ProductName` varchar(100) DEFAULT NULL,
   `CategoryID` bigint(20) DEFAULT NULL,
   `BarcodeNeeded` tinyint(3) unsigned DEFAULT '1',
-  PRIMARY KEY (`ProductID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`sn`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `tbl_product`
+--
+
+INSERT INTO `tbl_product` (`sn`, `ProductID`, `ProductName`, `CategoryID`, `BarcodeNeeded`) VALUES
+(9, '1424177377', 'asd', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -242,7 +249,18 @@ CREATE TABLE IF NOT EXISTS `tbl_productcategory` (
   `CategoryID` bigint(20) NOT NULL AUTO_INCREMENT,
   `CategoryName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`CategoryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `tbl_productcategory`
+--
+
+INSERT INTO `tbl_productcategory` (`CategoryID`, `CategoryName`) VALUES
+(3, 'ssffff'),
+(4, 'aaa'),
+(5, 'sss'),
+(6, 'tt'),
+(7, 'kkk');
 
 -- --------------------------------------------------------
 
@@ -404,16 +422,7 @@ CREATE TABLE IF NOT EXISTS `tbl_session` (
 --
 
 INSERT INTO `tbl_session` (`id`, `expire`, `data`) VALUES
-('', 1423982582, 0x5f5f666c6173687c613a303a7b7d706b7c693a34333b5f5f69647c693a34333b73686f7069647c733a33383a227b36304245313545352d354639302d323345322d424431342d4238444443373931324131427d223b75736572747970657c693a333b),
-('0oh95o7jacifso7t3m72v2uga6', 1423719324, 0x5f5f666c6173687c613a303a7b7d706b7c693a313b5f5f69647c693a313b),
-('145el8mkipblancfs511p31uh6', 1423741170, 0x5f5f666c6173687c613a303a7b7d),
-('4c4c18bjhtc4304hl8kcd91ht1', 1423981848, 0x5f5f666c6173687c613a303a7b7d5f5f69647c693a34333b),
-('6ns5snmfj473ihl6coh7pgkts4', 1423659184, 0x5f5f666c6173687c613a303a7b7d),
-('6tei26fsl07tj2tc5abvjfvol2', 1423914424, 0x5f5f666c6173687c613a303a7b7d),
-('e8iliuu7ljsm5kvjmjd0okt366', 1423657794, 0x5f5f666c6173687c613a303a7b7d),
-('i2u5evqdd8lvj2jd4iqjhq99c4', 1423986246, 0x5f5f666c6173687c613a303a7b7d706b7c693a34333b5f5f69647c693a34333b73686f7069647c733a33383a227b36304245313545352d354639302d323345322d424431342d4238444443373931324131427d223b75736572747970657c693a333b),
-('i54vr6bgd2cb6dkefi09r7dkn3', 1423659193, 0x5f5f666c6173687c613a303a7b7d),
-('olmj87eesemnfhjd75b97ms337', 1423726188, 0x5f5f666c6173687c613a303a7b7d);
+('vdj36qm479tphgo8hoji01tdf3', 1424706499, 0x5f5f666c6173687c613a303a7b7d706b7c693a313b5f5f69647c693a313b);
 
 -- --------------------------------------------------------
 
@@ -434,25 +443,55 @@ CREATE TABLE IF NOT EXISTS `tbl_setcommission` (
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_shop` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ShopID` varchar(255) NOT NULL,
+  `shopid` int(11) NOT NULL AUTO_INCREMENT,
   `ShopName` varchar(100) DEFAULT NULL,
   `Address1` longtext,
   `Address2` longtext,
   `ContactNo` varchar(50) DEFAULT NULL,
-  `ContactPerson` varchar(100) DEFAULT NULL,
+  `owner_name` varchar(100) DEFAULT NULL,
   `Logo` tinyblob,
   `Slogan` longtext,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+  `owner_id` int(11) NOT NULL,
+  `shop_type` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`shopid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `tbl_shop`
 --
 
-INSERT INTO `tbl_shop` (`id`, `ShopID`, `ShopName`, `Address1`, `Address2`, `ContactNo`, `ContactPerson`, `Logo`, `Slogan`) VALUES
-(13, '{F5A209F6-681D-F66F-2270-A2ED3EA3BC85}', 'Swapno Shopping ', 'bsd', '', '01737014055', 'Joyprokash', 0x64617364, 'asdasd'),
-(14, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'Mina Bazar', 'Mirabazar', 'test', '01737014055', 'Joyprokash', 0x64617364, 'asdasd');
+INSERT INTO `tbl_shop` (`shopid`, `ShopName`, `Address1`, `Address2`, `ContactNo`, `owner_name`, `Logo`, `Slogan`, `owner_id`, `shop_type`, `status`) VALUES
+(13, 'Swapno Shopping ', 'bsd', '', '01737014055', 'Joyprokash', 0x64617364, 'asdasd', 0, '', 0),
+(15, 'Swapno', 'dfg', '', '34234', 'dfsd', '', 'sdffds', 0, '', 0),
+(16, 'Mina Bazar', 'dfgd', '', '234234', 'dfsdf', '', 'sdfs', 0, '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_shopowner`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_shopowner` (
+  `owner_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `address` text NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `business_name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`owner_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `tbl_shopowner`
+--
+
+INSERT INTO `tbl_shopowner` (`owner_id`, `name`, `address`, `phone`, `business_name`, `created_at`, `updated_at`, `status`) VALUES
+(5, 'rashi', 'sakjdfh', '898', 'arrowsoft', '2015-02-21 00:00:00', NULL, 1),
+(7, 'ArrowSoft', 'lklkjl', '98', 'nhkjh', '2015-02-21 00:00:00', '2015-02-23 00:00:00', 0),
+(8, 'ppppp', 'dddd', '4444', 'ddddd', '2015-02-23 00:00:00', '2015-02-23 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -468,18 +507,27 @@ CREATE TABLE IF NOT EXISTS `tbl_shopuser` (
   `type` int(11) NOT NULL,
   `auth_key` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` int(11) NOT NULL,
   PRIMARY KEY (`sn`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
 
 --
 -- Dumping data for table `tbl_shopuser`
 --
 
-INSERT INTO `tbl_shopuser` (`sn`, `shop_id`, `username`, `password`, `type`, `auth_key`, `password_hash`) VALUES
-(43, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'joy', '827ccb0eea8a706c4c34a16891f84e7b', 3, '', ''),
-(44, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'jsf', '71483cb076509557cf2425ae93283d51', 3, '', ''),
-(45, '', 'sd', 'a0aa6f36bc82a0d364dfd855b3920036', 4, '', ''),
-(51, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'bb', '08f8e0260c64418510cefb2b06eee5cd', 4, '', '');
+INSERT INTO `tbl_shopuser` (`sn`, `shop_id`, `username`, `password`, `type`, `auth_key`, `password_hash`, `emp_id`, `created_at`, `updated_at`, `status`) VALUES
+(43, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'admin', '21232f297a57a5a743894a0e4a801fc3', 3, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(45, '', 'sd', 'a0aa6f36bc82a0d364dfd855b3920036', 4, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(52, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'ss', '93b8004c63cb098c7c7cf5ca98d9898b', 4, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(53, '{60BE15E5-5F90-23E2-BD14-B8DDC7912A1B}', 'sdfww', '74be16979710d4c4e7c6647856088456', 3, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(54, '{549FAF9F-CFB4-4B0C-363B-C5EB217360F8}', 'dfg', '38d7355701b6f3760ee49852904319c1', 2, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(55, '{99DF44E0-6494-D537-A94F-D5B0D86C3DB9}', 'dfg', '38d7355701b6f3760ee49852904319c1', 2, '', '', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(56, '25', 'asd', 'asd', 0, '', '', 1, '2015-02-22 18:00:00', '0000-00-00 00:00:00', 0),
+(57, '26', 'asd', 'asd', 0, '', '', 1, '2015-02-22 18:00:00', '0000-00-00 00:00:00', 1),
+(58, '27', 'qwe', 'qwe', 0, '', '', 1, '2015-02-22 18:00:00', '0000-00-00 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -545,14 +593,17 @@ CREATE TABLE IF NOT EXISTS `tbl_supplier` (
   `ContactNo` varchar(50) DEFAULT NULL,
   `ContactPerson` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`SupplierID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `tbl_supplier`
 --
 
 INSERT INTO `tbl_supplier` (`SupplierID`, `SupplierName`, `Address`, `ContactNo`, `ContactPerson`) VALUES
-(1, 'sdas', 'asdasd', '3423423', 'asdasd');
+(1, 'sdas', 'asdasd', '3423423', 'asdasd'),
+(2, 'Joy', 'adas', '01737014055', 'asdasd'),
+(4, 'adad', 'asdas', '23423', 'wewer'),
+(9, 'asdas', 'asdas', '234', 'wewerw');
 
 -- --------------------------------------------------------
 

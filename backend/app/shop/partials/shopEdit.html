@@ -8,22 +8,50 @@
     <div class="modal-body">
         <form name="product_form" class="form-horizontal" role="form" novalidate>
             <form-element label="SHOP NAME" mod="product">
-                <input type="text" class="form-control" name="name" placeholder="Shop Name" ng-model="product.name" ng-disabled="product.id" focus/>
+                <input type="text" class="form-control" name="name" placeholder="Shop Name" ng-model="product.ShopName" ng-disabled="product.id" focus/>
             </form-element>
             <form-element label="ADDRESS" mod="product">
-            <textarea class="form-control" name="address" placeholder="ADDRESS" ng-model="product.address">{{product.address}}</textarea>
+            <textarea class="form-control" name="address" placeholder="ADDRESS" ng-model="product.Address1">{{product.address}}</textarea>
             </form-element>
             <form-element label="Conatct" mod="product">
-                <input type="text" name="phone" class="form-control" placeholder="PHONE" ng-model="product.phone"  only-numbers/>
+                <input type="text" name="phone" class="form-control" placeholder="PHONE" ng-model="product.ContactNo"  only-numbers/>
                 <small class="errorMessage" ng-show="product_form.phone.$dirty && product_form.phone.$invalid"> Enter Phone Number.</small>
             </form-element>
             <form-element label="Owner name" mod="product">
-                <input type="text" name="business_name" class="form-control" placeholder="Owner Name" ng-model="product.owner_name"/>
+                <input type="text" name="Owner name" class="form-control" placeholder="Owner Name" ng-model="product.owner_name"/>
                 <small class="errorMessage" ng-show="product_form.owner_name.$dirty && product_form.owner_name.$invalid"> Enter Owner Name.</small>
             </form-element>
-			<form-element label="Owner name" mod="product">
-                <input type="text" name="business_name" class="form-control" placeholder="Owner Name" ng-model="product.owner_name"/>
-                <small class="errorMessage" ng-show="product_form.owner_name.$dirty && product_form.owner_name.$invalid"> Enter Owner Name.</small>
+			<form-element label="Username" mod="product">
+                <input type="text" name="username" class="form-control" placeholder="Username" ng-model="product.username"/>
+                <small class="errorMessage" ng-show="product_form.username.$dirty && product_form.username.$invalid"> Enter Username.</small>
+            </form-element>
+			<form-element label="Password" mod="product">
+                <input type="text" name="password" class="form-control" placeholder="password" ng-model="product.password"/>
+                <small class="errorMessage" ng-show="product_form.password.$dirty && product_form.password.$invalid"> Enter Password.</small>
+            </form-element>
+			<form-element label="Logo" mod="product">
+                <input type="text" name="logo" class="form-control" placeholder="Logo" ng-model="product.Logo"/>
+                <small class="errorMessage" ng-show="product_form.logo.$dirty && product_form.logo.$invalid"> Logo.</small>
+            </form-element>
+			<form-element label="Slogan" mod="product">
+                <input type="text" name="Slogan" class="form-control" placeholder="Slogan" ng-model="product.Slogan"/>
+                <small class="errorMessage" ng-show="product_form.slogan.$dirty && product_form.slogan.$invalid"> Enter Slogan.</small>
+            </form-element>
+			<form-element label="Owner ID" mod="product">
+               <input type="text" name="ownerid" class="form-control" placeholder="Owner id" ng-model="product.owner_id"/>
+                <small class="errorMessage" ng-show="product_form.ownerid.$dirty && product_form.ownerid.$invalid"> Owner ID.</small>
+				 <!--<select class="form-control" ng-repeat="x in data" ng-model="product.ownerid">
+					<option value="x.owner_id">{{x.name}}</option>-->
+				
+				</select>
+            </form-element>
+			<form-element label="Shop Type" mod="product">
+                <input type="text" name="shoptype" class="form-control" placeholder="Shop Type" ng-model="product.shop_type"/>
+                <small class="errorMessage" ng-show="product_form.shoptype.$dirty && product_form.shoptype.$invalid"> Enter Shop Type.</small>
+            </form-element>
+			<form-element label="Status" mod="product">
+                <input type="text" name="status" class="form-control" placeholder="Shop Type" ng-model="product.status"/>
+                <small class="errorMessage" ng-show="product_form.status.$dirty && product_form.status.$invalid"> Enter Status.</small>
             </form-element>
             <div class="space"></div>
             <div class="space-4"></div>

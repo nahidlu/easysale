@@ -1,6 +1,6 @@
 <h4 class="blog-post-title">Shop List</h4>
 <hr/>
-<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Shop Owner</button>
+<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Shop</button>
 
 <div class="table-responsive">
 <div class="panel panel-primary">
@@ -21,8 +21,8 @@
     
     <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
 
-    <tr ng-repeat="c in products | filter:filterProduct | orderBy:'-owner_id' " id="{{c.owner_id}}" animate-on-change='c.name + c.phone + c.business_name + c.address' ng-animate=" 'animate'">
-        <td>{{c.owner_id}}</td><td>{{c.name}}</td><td>{{c.phone}}</td><td>{{c.business_name}}</td><td>{{c.address}}</td>
+    <tr ng-repeat="c in products | filter:filterProduct | orderBy:'-shopid' " id="{{c.shopid}}" animate-on-change='c.ShopName + c.ContactNo + c.Address1 + c.owner_name+c.Logo+c.Slogan+c.owner_id+c.shop_type+c.status' ng-animate=" 'animate'">
+        <td>{{c.shopid}}</td><td>{{c.ShopName}}</td><td>{{c.ContactNo}}</td><td>{{c.owner_name}}</td><td>{{c.Address1}}</td><td>{{c.Logo}}</td><td>{{c.Slogan}}</td><td>{{c.owner_id}}</td><td>{{c.shop_type}}</td>
         <td>
             <button class="btn" ng-class="{1:'btn-success', 0:''}[c.status]" ng-click="changeProductStatus(c);">
 				<span ng-if="c.status == 0">Inactive</span>

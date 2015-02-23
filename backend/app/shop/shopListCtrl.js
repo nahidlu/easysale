@@ -1,5 +1,7 @@
-app.controller('shopListCtrl', function ($scope, $modal, $filter, Data) {
-    $scope.product = {};
+app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
+    
+	
+	$scope.product = {};
 	//$scope.title =null;
 	$scope.config = {
 	    itemsPerPage: 5,
@@ -11,18 +13,19 @@ app.controller('shopListCtrl', function ($scope, $modal, $filter, Data) {
     });
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="1" ? "0" : "1");
-        Data.post("changestatus",{status:product.status,id:product.shopid});
+        Data.post("changestatus",{status:product.status,shopid:product.shopid});
     };
     $scope.deleteProduct = function(product){
         if(confirm("Are you sure to remove the product")){
-            Data.post("deleteowner",product).then(function(result){
+            Data.post("deleteshop",product).then(function(result){
                 $scope.products = _.without($scope.products, _.findWhere($scope.products, {shopid:product.shopid}));
             });
         }
     };
     $scope.open = function (p,size) {
+		
 	      var modalInstance = $modal.open({
-          templateUrl: '../app/shopsowner/partials/shopEdit.html',
+          templateUrl: '../app/shop/partials/shopEdit.html',
           controller: 'shopEditCtrl',
           size: size,
           resolve: {
@@ -40,12 +43,15 @@ app.controller('shopListCtrl', function ($scope, $modal, $filter, Data) {
                 $scope.products = $filter('orderBy')($scope.products, 'shopid', 'reverse');
 				
             }else if(selectedObject.save == "update"){
-                p.address = selectedObject.address;
+                p.Address1 = selectedObject.Address1;
                 p.phone = selectedObject.phone;
                 p.business_name = selectedObject.business_name;
             }
         });
     };
+	
+	 $http.get("ownerlist")
+		.success(function(response) {$scope.data = response;});
     
  $scope.columns = [
                     {text:"Shop ID",predicate:"shopid",sortable:true,dataType:"number"},
@@ -64,15 +70,16 @@ app.controller('shopListCtrl', function ($scope, $modal, $filter, Data) {
 });
 
 
-app.controller('shopEditCtrl', function ($scope, $modalInstance, item, Data) {
+app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Data) {
 
   $scope.product = angular.copy(item);
         
+		
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.owner_id > 0) ? 'Edit Shop' : 'Add Shop';
-        $scope.buttonText = (item.owner_id > 0) ? 'Update Shop' : 'Add New Shop';
+        $scope.title = (item.shopid > 0) ? 'Edit Shop' : 'Add Shop';
+        $scope.buttonText = (item.shopid > 0) ? 'Update Shop' : 'Add New Shop';
 
         var original = item;
         $scope.isClean = function() {
@@ -80,7 +87,7 @@ app.controller('shopEditCtrl', function ($scope, $modalInstance, item, Data) {
         }
         $scope.saveProduct = function (product) {
             product.uid = $scope.uid;
-            if(product.owner_id > 0){
+            if(product.shopid > 0){
                 Data.post('updateshop', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
@@ -96,7 +103,7 @@ app.controller('shopEditCtrl', function ($scope, $modalInstance, item, Data) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'insert';
-                        x.owner_id = result.data;						
+                        x.shopid = result.data;						
                         $modalInstance.close(x);
                     }else{
                         //console.log(result);
