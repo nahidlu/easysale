@@ -40,14 +40,14 @@ class ShopController extends \yii\web\Controller
 		
 		$model = new Shop();
 		$data = json_decode(file_get_contents("php://input"));
-		$model->ShopName = $data->name;
-		$model->Address1 = $data->address;
-		$model->ContactNo = $data->phone;
+		$model->ShopName = $data->ShopName;
+		$model->Address1 = $data->Address1;
+		$model->ContactNo = $data->ContactNo;
 		$model->owner_name = $data->owner_name;
-		$model->Logo = $data->logo;
-		$model->Slogan = $data->slogan;
-		$model->owner_id = $data->ownerid;
-		$model->shop_type = $data->shoptype;
+		$model->Logo = $data->Logo;
+		$model->Slogan = $data->Slogan;
+		$model->owner_id = $data->owner_id;
+		$model->shop_type = $data->shop_type;
 		$model->status = $data->status;
 		//$model->created_at = date('Y-m-d');
 		if($model->save())
@@ -56,7 +56,7 @@ class ShopController extends \yii\web\Controller
 			$model2->username = $data->username;
 			$model2->password = $data->password;
 			$model2->shop_id = $model->shopid;
-			$model2->emp_id = $data->ownerid;
+			$model2->emp_id = $data->owner_id;
 			$model2->created_at = date('Y-m-d');
 			$model2->status = '1';
 			$model2->save();
