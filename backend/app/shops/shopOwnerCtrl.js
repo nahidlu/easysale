@@ -36,8 +36,9 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
             if(selectedObject.save == "insert"){
                
 			    //$scope.products.splice(0,0,selectedObject);
-				$scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
+				$scope.products.unshift(selectedObject);
+				//$scope.products.push(selectedObject);
+                //$scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
 				
             }else if(selectedObject.save == "update"){
                 p.address = selectedObject.address;
