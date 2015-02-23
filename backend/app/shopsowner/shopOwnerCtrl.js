@@ -1,14 +1,25 @@
 app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
     $scope.product = {};
 	//$scope.title =null;
-	$scope.config = {
-	    itemsPerPage: 5,
-	    fillLastPage: true
-	  }
-
+	
     Data.get('listowners').then(function(data){
         $scope.products = data.data;
+
+        $scope.currentPage = 1; //current page
+        $scope.entryLimit = 7; //max no of items to display in a page
+        $scope.filteredItems = $scope.products.length; //Initially for no filter  
+        $scope.totalItems = $scope.products.length;
     });
+	
+	$scope.setPage = function(pageNo) {
+	        $scope.currentPage = pageNo;
+	    };
+	    
+	    $scope.sort_by = function(predicate) {
+	        $scope.predicate = predicate;
+	        $scope.reverse = !$scope.reverse;
+	    };
+	
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="1" ? "0" : "1");
         Data.post("changestatus",{status:product.status,id:product.owner_id});
@@ -36,8 +47,8 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
             if(selectedObject.save == "insert"){
                
 			    //$scope.products.splice(0,0,selectedObject);
-				$scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
+				$scope.products.unshift(selectedObject);
+                //$scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
 				
             }else if(selectedObject.save == "update"){
                 p.address = selectedObject.address;
