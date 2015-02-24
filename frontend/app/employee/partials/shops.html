@@ -1,0 +1,81 @@
+<h4 class="blog-post-title">Manage Employee</h4>
+<hr/>
+<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Employee</button>
+
+<div class="table-responsive">
+<div class="panel panel-primary">
+  <div class="panel-heading">List of Employee
+      <div class="sw-search" >
+            <div class="nav-search" id="nav-search">
+				
+                    Filter: <span class="input-icon">
+                        <input placeholder="Filter products list ..." class="nav-search-input" ng-model="search" ng-change="filter();"  autocomplete="off" type="text" style="width:300px;" focus>
+                        <i class="search-icon fa fa-search nav-search-icon"></i>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <select ng-model="entryLimit" class="form-control">
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+        
+        <div class="col-md-7">
+            <h5>Filtered {{ filtered.length }} of {{ totalItems}} total customers</h5>
+        </div>
+    </div>
+     <div class="row">
+         <div class="col-md-12" ng-show="filteredItems > 0">
+             <table class="table table-striped table-bordered">
+             <thead>
+			 <th>ID&nbsp;<a ng-click="sort_by('sn');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Username&nbsp;<a ng-click="sort_by('username');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Password&nbsp;</th>
+             <th>User Type&nbsp;</th>
+			
+             <th>Status&nbsp;<a ng-click="sort_by('creditLimit');"><i class="glyphicon glyphicon-sort"></i></a></th>
+			 <th>Action</th>
+             </thead>
+             <tbody>
+                 <tr ng-repeat="data in filtered = (products | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" animate-on-change='data.username + data.password + data.type  + data.status' ng-animate=" 'animate'">
+                     <td>{{data.sn}}</td>
+					 <td>{{data.username}}</td>
+                     <td>{{data.password}}</td>
+                     <td>{{data.type}}</td>
+                     <td>
+						 <button class="btn" ng-class="{1:'btn-success', 0:''}[data.status]" ng-click="changeProductStatus(data);"> <span ng-if="data.status =='1'">
+          			   Active
+          		 			</span>
+         				   <span ng-if="data.status =='0' ">
+         					  Inactive
+         				 </span></button>
+						</td>
+                     <td>
+						<div class="btn-group">
+						      <button type="button" class="btn btn-default fa fa-edit" ng-click="open(data);"></button>
+						      <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(data);"></button>
+						     </div>
+                     </td>
+                 </tr>
+             </tbody>
+             </table>
+         </div>
+         <div class="col-md-12" ng-show="filteredItems == 0">
+             <div class="col-md-12">
+                 <h4>No customers found</h4>
+             </div>
+         </div>
+         <div class="col-md-12" ng-show="filteredItems > 0">    
+             <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
+            
+            
+         </div>
+     </div>
+</div>
+              

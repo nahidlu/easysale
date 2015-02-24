@@ -18,6 +18,24 @@ class EmployeeController extends \yii\web\Controller
     }
 	
 	
+	 public function actionEmplist()
+    {
+	
+		$response =array();
+		$query = User::find()
+			//->orderBy('ID DESC')
+			->asArray()
+			->all();
+			//print_r($query);exit;
+			
+			$response["status"]="success";
+			$response["message"] = "Product listed successfully.";
+			$response["data"]=$query;
+			header('Content-type: application/json');
+			echo json_encode($response);
+    }
+	
+	
 	
 	public function actionTest(){
 		
@@ -48,15 +66,35 @@ class EmployeeController extends \yii\web\Controller
 			print json_encode($data);
 	}
 	
-	public function actionDelete(){
+	public function actionDeleteemployee()
+	{
 		$data = json_decode(file_get_contents("php://input"));
-		$user = User::findOne($data->id);
-		$user->delete();
-		$arr = array('msg' => "User deleted Successfully !!!", 'error' => '');
-        $jsn = json_encode($arr);
-        print_r($jsn);
+		$query = User::deleteAll('sn='.$data->sn);
+		if($query)
+		{
+			$response["status"]='success';
+			$response["message"] = 'Owner deleted successfully.';
+			//$response["data"]=(int)$model->id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
+	}
+	
+	public function actionChangestatus()
+	{
+		$data = json_decode(file_get_contents("php://input"));
+		$query = User::updateAll(['status' => $data->status], 'sn = '.$data->id);
 		
-		
+		if($query)
+		{
+			$response["status"]='success';
+			$response["message"] = 'Status changed successfully.';
+			//$response["data"]=(int)$model->id;
+			http_response_code(200);
+			header('Content-type: application/json');
+			echo json_encode($response,JSON_NUMERIC_CHECK);
+		}
 	}
 	
 	
