@@ -46,7 +46,7 @@ class ShopController extends \yii\web\Controller
 		$model->owner_name = $data->owner_name;
 		$model->Logo = $data->Logo;
 		$model->Slogan = $data->Slogan;
-		$model->owner_id = $data->ownerid;
+		$model->owner_id = $data->owner_id;
 		$model->shop_type = $data->shop_type;
 		$model->status = $data->status;
 		//$model->created_at = date('Y-m-d');
@@ -56,7 +56,7 @@ class ShopController extends \yii\web\Controller
 			$model2->username = $data->username;
 			$model2->password = $data->password;
 			$model2->shop_id = $model->shopid;
-			$model2->emp_id = $data->ownerid;
+			$model2->emp_id = $data->owner_id;
 			$model2->created_at = date('Y-m-d');
 			$model2->status = '1';
 			$model2->save();

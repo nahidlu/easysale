@@ -58,6 +58,7 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
 			    //$scope.products.splice(0,0,selectedObject);
 				$scope.products.unshift(selectedObject);
                 //$scope.products = $filter('orderBy')($scope.products, 'shopid', 'reverse');
+			
 				
             }else if(selectedObject.save == "update"){
                 p.ShopName = selectedObject.ShopName;
