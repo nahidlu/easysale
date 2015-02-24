@@ -54,7 +54,7 @@ class ShopController extends \yii\web\Controller
 		{
 			$model2 = new Shopuser();
 			$model2->username = $data->username;
-			$model2->password = $data->password;
+			$model2->password = md5($data->password);
 			$model2->shop_id = $model->shopid;
 			$model2->emp_id = $data->owner_id;
 			$model2->created_at = date('Y-m-d');
