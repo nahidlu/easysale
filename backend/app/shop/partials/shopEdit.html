@@ -38,10 +38,10 @@
                 <small class="errorMessage" ng-show="product_form.slogan.$dirty && product_form.slogan.$invalid"> Enter Slogan.</small>
             </form-element>
 			<form-element label="Owner ID" mod="product">
-               <input type="text" name="ownerid" class="form-control" placeholder="Owner id" ng-model="product.owner_id"/>
-                <small class="errorMessage" ng-show="product_form.ownerid.$dirty && product_form.ownerid.$invalid"> Owner ID.</small>
-				 <!--<select class="form-control" ng-repeat="x in data" ng-model="product.ownerid">
-					<option value="x.owner_id">{{x.name}}</option>-->
+		
+				<select class="form-control"  ng-model="product.ownerid">
+				<option>Select Owner</option>
+				<option ng-repeat="x in dt" value="{{x.owner_id}}">{{x.name}}</option>
 				
 				</select>
             </form-element>

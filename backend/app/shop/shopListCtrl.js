@@ -1,16 +1,33 @@
 app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
-    
-	
+   
+	 
 	$scope.product = {};
 	//$scope.title =null;
-	$scope.config = {
-	    itemsPerPage: 5,
-	    fillLastPage: true
-	  }
 
-    Data.get('shoplist').then(function(data){
+	   Data.get('shoplist').then(function(data){
         $scope.products = data.data;
+
+        $scope.currentPage = 1; //current page
+        $scope.entryLimit = 5; //max no of items to display in a page
+        $scope.filteredItems = $scope.products.length; //Initially for no filter  
+        $scope.totalItems = $scope.products.length;
     });
+	
+	$scope.setPage = function(pageNo) {
+	        $scope.currentPage = pageNo;
+	    };
+	    
+	    $scope.sort_by = function(predicate) {
+	        $scope.predicate = predicate;
+	        $scope.reverse = !$scope.reverse;
+	    };
+	   Data.get('ownerlist').then(function(data){
+        $scope.dt = data.data;
+		});
+
+  /*   Data.get('shoplist').then(function(data){
+        $scope.products = data.data;
+    }); */
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="1" ? "0" : "1");
         Data.post("changestatus",{status:product.status,shopid:product.shopid});
@@ -39,28 +56,34 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
             if(selectedObject.save == "insert"){
                
 			    //$scope.products.splice(0,0,selectedObject);
-				$scope.products.push(selectedObject);
-                $scope.products = $filter('orderBy')($scope.products, 'shopid', 'reverse');
+				$scope.products.unshift(selectedObject);
+                //$scope.products = $filter('orderBy')($scope.products, 'shopid', 'reverse');
 				
             }else if(selectedObject.save == "update"){
+                p.ShopName = selectedObject.ShopName;
                 p.Address1 = selectedObject.Address1;
-                p.phone = selectedObject.phone;
-                p.business_name = selectedObject.business_name;
+                p.ContactNo = selectedObject.ContactNo;
+                p.owner_name = selectedObject.owner_name;
+                p.Logo = selectedObject.Logo;
+                p.Slogan = selectedObject.Slogan;
+                p.owner_id = selectedObject.owner_id;
+                p.shop_type = selectedObject.shop_type;
+                p.status = selectedObject.status;
+               
             }
         });
     };
 	
-	 $http.get("ownerlist")
-		.success(function(response) {$scope.data = response;});
+	
     
  $scope.columns = [
                     {text:"Shop ID",predicate:"shopid",sortable:true,dataType:"number"},
                     {text:"Shop Name",predicate:"ShopName",sortable:true},
-                    {text:"Address",predicate:"address1",sortable:true},
+                    {text:"Address",predicate:"Address1",sortable:true},
                     {text:"Contact No",predicate:"ContactNo",sortable:true},
                     {text:"Owner Name",predicate:"owner_name",sortable:true},
-                    {text:"Logo",predicate:"logo",sortable:true},
-                    {text:"Slogan",predicate:"slogan",sortable:true},
+                    {text:"Logo",predicate:"Logo",sortable:true},
+                    {text:"Slogan",predicate:"Slogan",sortable:true},
                     {text:"Owner ID",predicate:"owner_id",sortable:true},
                     {text:"Shop Type",predicate:"shop_type",sortable:true},
                     {text:"Status",predicate:"status",sortable:true},
@@ -74,7 +97,9 @@ app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Dat
 
   $scope.product = angular.copy(item);
         
-		
+		   Data.get('ownerlist').then(function(data){
+        $scope.dt = data.data;
+    });
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };

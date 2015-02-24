@@ -13,7 +13,7 @@ use yii\web\session;
 ?>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/angular.min.js"></script>
 <!-- Libraries -->
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/ui-bootstrap-tpls-0.11.2.min.js"></script>
+<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/ui-bootstrap-tpls-0.10.0.min.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/angular-route.min.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/angular-animate.min.js"></script>
 <link rel="stylesheet" href="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/css/custom.css" type="text/css" />
