@@ -18,6 +18,23 @@ class EmployeeController extends \yii\web\Controller
     }
 	
 	
+	 public function actionEmplist()
+    {
+		$response =array();
+		$query = User::find()
+			//->orderBy('ID DESC')
+			->asArray()
+			->all();
+			//print_r($query);exit;
+			
+			$response["status"]="success";
+			$response["message"] = "Product listed successfully.";
+			$response["data"]=$query;
+			header('Content-type: application/json');
+			echo json_encode($response);
+    }
+	
+	
 	
 	public function actionTest(){
 		
