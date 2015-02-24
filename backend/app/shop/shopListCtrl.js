@@ -21,13 +21,9 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
 	        $scope.predicate = predicate;
 	        $scope.reverse = !$scope.reverse;
 	    };
-	   Data.get('ownerlist').then(function(data){
-        $scope.dt = data.data;
-		});
+	   
 
-  /*   Data.get('shoplist').then(function(data){
-        $scope.products = data.data;
-    }); */
+
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="1" ? "0" : "1");
         Data.post("changestatus",{status:product.status,shopid:product.shopid});
@@ -98,9 +94,10 @@ app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Dat
 
   $scope.product = angular.copy(item);
         
-		   Data.get('ownerlist').then(function(data){
+		Data.get('ownerlist').then(function(data){
         $scope.dt = data.data;
-    });
+		});
+		
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
