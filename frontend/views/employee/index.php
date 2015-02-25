@@ -19,11 +19,10 @@ use yii\web\session;
 <link rel="stylesheet" href="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/css/custom.css" type="text/css" />
 <link rel="stylesheet" href="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/css/font-awesome.min.css">
 <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'> -->
-<<<<<<< HEAD
-<sction ng-cloak="" ng-app="employee" >
-=======
+
+
 <sction ng-cloak="" ng-app="Employee" >
->>>>>>> test
+
 <!-- Shop owner app section starts here  -->
 <div class="row">
 
@@ -41,13 +40,11 @@ use yii\web\session;
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/app.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/data.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/directives.js"></script>
-<<<<<<< HEAD
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/empManageCtrl.js"></script>
-<script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/empCtrl.js"></script>
-=======
+
+
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/employeeListCtrl.js"></script>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/app/employee/employeeCtrl.js"></script>
->>>>>>> test
+
 <!-- Some Bootstrap Helper Libraries -->
 
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/underscore.min.js"></script>

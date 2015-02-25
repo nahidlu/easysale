@@ -49,9 +49,12 @@
                 <input type="text" name="shoptype" class="form-control" placeholder="Shop Type" ng-model="product.shop_type"/>
                 <small class="errorMessage" ng-show="product_form.shoptype.$dirty && product_form.shoptype.$invalid"> Enter Shop Type.</small>
             </form-element>
-			<form-element label="Status" mod="product">
-                <input type="text" name="status" class="form-control" placeholder="Shop Type" ng-model="product.status"/>
-                <small class="errorMessage" ng-show="product_form.status.$dirty && product_form.status.$invalid"> Enter Status.</small>
+			 <form-element label="Status" mod="product">
+			<select class="form-control" ng-model="product.status">
+			<option value="0">De-active</option>
+			<option value="1">Active</option>
+			</select>
+               
             </form-element>
             <div class="space"></div>
             <div class="space-4"></div>

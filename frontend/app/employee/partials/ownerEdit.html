@@ -2,24 +2,33 @@
         <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
     </button>
     <div class="modal-header">
-        <h3 class="modal-title">{{title}} [ID: {{product.owner_id}}]</h3>
+        <h3 class="modal-title">{{title}} [ID: {{product.sn}}]</h3>
 		<span>{{suberr}} </span>
     </div>
     <div class="modal-body">
         <form name="product_form" class="form-horizontal" role="form" novalidate>
-            <form-element label="NAME" mod="product">
-                <input type="text" class="form-control" name="name" placeholder="NAME" ng-model="product.name" ng-disabled="product.id" focus/>
+            <form-element label="Username" mod="product">
+                <input type="text" class="form-control" name="username" placeholder="username" ng-model="product.username" focus/>
             </form-element>
-            <form-element label="ADDRESS" mod="product">
-            <textarea class="form-control" name="address" placeholder="ADDRESS" ng-model="product.address">{{product.description}}</textarea>
+			<form-element label="Password" mod="product">
+                <input type="text" class="form-control" name="password" placeholder="password" ng-model="product.password" />
             </form-element>
-            <form-element label="PHONE" mod="product">
-                <input type="text" name="phone" class="form-control" placeholder="PHONE" ng-model="product.phone"  only-numbers/>
-                <small class="errorMessage" ng-show="product_form.phone.$dirty && product_form.phone.$invalid"> Enter the price.</small>
+            
+            <form-element label="User Type" mod="product">
+               
+				<select class="form-control"  ng-model="product.type">
+				<option>Select Owner</option>
+				<option ng-repeat="x in dt" value="{{x.id}}">{{x.type}}</option>
+				
+				</select>
+           
             </form-element>
-            <form-element label="BUSINESS NAME" mod="product">
-                <input type="text" name="business_name" class="form-control" placeholder="BUSINESS NAME" ng-model="product.business_name"/>
-                <small class="errorMessage" ng-show="product_form.business_name.$dirty && product_form.business_name.$invalid"> Enter the Packing.</small>
+            <form-element label="Status" mod="product">
+			<select class="form-control" ng-model="product.status">
+			<option value="0">De-active</option>
+			<option value="1">Active</option>
+			</select>
+               
             </form-element>
 
             <div class="space"></div>

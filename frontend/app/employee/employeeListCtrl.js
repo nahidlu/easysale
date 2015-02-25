@@ -1,7 +1,9 @@
 app.controller('employeeListCtrl', function ($scope, $modal, $filter, Data) {
     $scope.product = {};
 	//$scope.title =null;
-	
+	 Data.get('rolelist').then(function(data){
+        $scope.dt = data.data;
+		});
     Data.get('emplist').then(function(data){
         $scope.products = data.data;
 
@@ -51,9 +53,11 @@ app.controller('employeeListCtrl', function ($scope, $modal, $filter, Data) {
                 //$scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
 				
             }else if(selectedObject.save == "update"){
-                p.address = selectedObject.address;
-                p.phone = selectedObject.phone;
-                p.business_name = selectedObject.business_name;
+                p.username = selectedObject.username;
+                p.password = selectedObject.password;
+                p.type = selectedObject.type;
+                p.status = selectedObject.status;
+                
             }
         });
     };
@@ -73,12 +77,16 @@ app.controller('employeeListCtrl', function ($scope, $modal, $filter, Data) {
 app.controller('emplistEditCtrl', function ($scope, $modalInstance, item, Data) {
 
   $scope.product = angular.copy(item);
+  
+  Data.get('rolelist').then(function(data){
+        $scope.dt = data.data;
+		});
         
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.owner_id > 0) ? 'Edit Owner' : 'Add Owner';
-        $scope.buttonText = (item.owner_id > 0) ? 'Update Owner' : 'Add New Owner';
+        $scope.title = (item.sn > 0) ? 'Edit Owner' : 'Add Owner';
+        $scope.buttonText = (item.sn > 0) ? 'Update Owner' : 'Add New Owner';
 
         var original = item;
         $scope.isClean = function() {
@@ -86,8 +94,8 @@ app.controller('emplistEditCtrl', function ($scope, $modalInstance, item, Data) 
         }
         $scope.saveProduct = function (product) {
             product.uid = $scope.uid;
-            if(product.owner_id > 0){
-                Data.post('updateowner', product).then(function (result) {
+            if(product.sn > 0){
+                Data.post('updateemployee', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'update';
@@ -98,7 +106,7 @@ app.controller('emplistEditCtrl', function ($scope, $modalInstance, item, Data) 
                 });
             }else{
                 product.status = 1;
-                Data.post('createowner', product).then(function (result) {
+                Data.post('createemployee', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'insert';
