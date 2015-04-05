@@ -1,12 +1,12 @@
-var app = angular.module('shop', ['ngRoute', 'ui.bootstrap', 'ngAnimate']);
+var app = angular.module('Employee', ['ngRoute', 'ui.bootstrap', 'ngAnimate']);
 
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
     when('/', {
       title: 'Products',
-      templateUrl: '../app/shop/partials/shoplists.html',
-      controller: 'shopListCtrl'
+      templateUrl: '../app/employee/partials/shopowners.html',
+      controller: 'employeeListCtrl'
     })
     .otherwise({
       redirectTo: '/'
@@ -21,4 +21,3 @@ app.filter('startFrom', function() {
         return [];
     }
 });
-    

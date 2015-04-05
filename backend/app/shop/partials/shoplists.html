@@ -1,43 +1,96 @@
 <h4 class="blog-post-title">Shop List</h4>
 <hr/>
-<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Shop Owner</button>
+<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Shop</button>
 
 <div class="table-responsive">
 <div class="panel panel-primary">
   <div class="panel-heading">List of Shops
-      <div class="sw-search" >
+    <div class="sw-search" >
             <div class="nav-search" id="nav-search">
+				
                     Filter: <span class="input-icon">
-                        <input placeholder="Filter products list ..." class="nav-search-input" ng-model="filterProduct" ng-change="resetLimit();"  autocomplete="off" type="text" style="width:300px;" focus>
+                        <input placeholder="Filter Shop list ..." class="nav-search-input" ng-model="search" ng-change="filter();"  autocomplete="off" type="text" style="width:300px;" focus>
                         <i class="search-icon fa fa-search nav-search-icon"></i>
                     </span>
             </div>
         </div>
     </div>
   <div class="panel-body">
+  <div class="row">
+  <div class="col-md-2">
+            <select ng-model="entryLimit" class="form-control">
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            </select>
+        </div>
+        
+        <div class="col-md-7">
+            <h5>Filtered {{ filtered.length }} of {{ totalItems}} total customers</h5>
+        </div>
+    </div>
+	<div class="row">
+	 <div class="col-md-12" ng-show="filteredItems > 0">
     <table class="table table-striped" at-list="list" at-config="config">
-    <tr ng-show="products.length==0"><td style="vertical-align:middle;"><i class="fa fa-ban fa-3x"></i>&nbsp;No data found</td></tr>
-    <tr ng-hide="products.length>-1"><td style="vertical-align:middle;"><i class="fa fa-cog fa-3x fa-spin"></i>&nbsp;Loading</td></tr>
-    
-    <tr><th ng-repeat="c in columns">{{c.text}}</th></tr>
-
-    <tr ng-repeat="c in products | filter:filterProduct | orderBy:'-owner_id' " id="{{c.owner_id}}" animate-on-change='c.name + c.phone + c.business_name + c.address' ng-animate=" 'animate'">
-        <td>{{c.owner_id}}</td><td>{{c.name}}</td><td>{{c.phone}}</td><td>{{c.business_name}}</td><td>{{c.address}}</td>
-        <td>
-            <button class="btn" ng-class="{1:'btn-success', 0:''}[c.status]" ng-click="changeProductStatus(c);">
-				<span ng-if="c.status == 0">Inactive</span>
-				<span ng-if="c.status == 1"> Active</span>
-			</button>
-        </td>
-        <td style="width:100px">
-            <div class="btn-group">
-              <button type="button" class="btn btn-default fa fa-edit" ng-click="open(c);"></button>
-              <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(c);"></button>
-            </div>
-        </td>
-    </tr>
+    <thead>
+			 <th>Shop Id&nbsp;<a ng-click="sort_by('shopid');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Shop Name&nbsp;<a ng-click="sort_by('ShopName');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Address&nbsp;</th>
+             <th>Contact&nbsp;</th>
+             <th>Owner Name&nbsp;</th>
+             <th>Logo&nbsp;</th>
+             <th>Slogan&nbsp;</th>
+             <th>Owner ID&nbsp;</th>
+             <th>Shop Type&nbsp;</th>
+             <th>Status&nbsp;<a ng-click="sort_by('creditLimit');"><i class="glyphicon glyphicon-sort"></i></a></th>
+			 <th>Action</th>
+             </thead>
+             <tbody>
+                 <tr ng-repeat="data in filtered = (products | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" animate-on-change='data.ShopName + data.Address1 + data.ContactNo + data.owner_name + data.Logo + data.Slogan +data.owner_id+data.shop_type+data.status' ng-animate=" 'animate'">
+                     <td>{{data.shopid}}</td>
+					 <td>{{data.ShopName}}</td>
+                     <td>{{data.Address1}}</td>
+                     <td>{{data.ContactNo}}</td>
+                     <td>{{data.owner_name}}</td>
+                     <td>{{data.Logo}}</td>
+                     <td>{{data.Slogan}}</td>
+                     <td>{{data.owner_id}}</td>
+                     <td>{{data.shop_type}}</td>
+                     <td>
+						 <button class="btn" ng-class="{1:'btn-success', 0:''}[data.status]" ng-click="changeProductStatus(data);"> <span ng-if="data.status =='1'">
+          			   Active
+          		 			</span>
+         				   <span ng-if="data.status =='0' ">
+         					  Inactive
+         				 </span></button>
+						</td>
+                     <td>
+						<div class="btn-group">
+						      <button type="button" class="btn btn-default fa fa-edit" ng-click="open(data);"></button>
+						      <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(data);"></button>
+						     </div>
+                     </td>
+                 </tr>
+             </tbody>
     </table>
-	<at-pagination at-list="list" at-config="config"></at-pagination>
+	</div>
+	
+	<div class="col-md-12" ng-show="filteredItems == 0">
+             <div class="col-md-12">
+                 <h4>No customers found</h4>
+             </div>
+         </div>
+	
+	
+	 <div class="col-md-12" ng-show="filteredItems > 0">    
+             <div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true" total-items="filteredItems" items-per-page="entryLimit" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div>
+            
+            
+         </div>
+		
+		</div>
 </div>
 </div>
 </div>

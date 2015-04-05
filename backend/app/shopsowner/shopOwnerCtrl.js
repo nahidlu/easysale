@@ -6,7 +6,7 @@ app.controller('shopownerCtrl', function ($scope, $modal, $filter, Data) {
         $scope.products = data.data;
 
         $scope.currentPage = 1; //current page
-        $scope.entryLimit = 7; //max no of items to display in a page
+        $scope.entryLimit = 3; //max no of items to display in a page
         $scope.filteredItems = $scope.products.length; //Initially for no filter  
         $scope.totalItems = $scope.products.length;
     });

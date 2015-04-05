@@ -1,4 +1,4 @@
-<h4 class="blog-post-title">Employee List</h4>
+<h4 class="blog-post-title">Manage Employee</h4>
 <hr/>
 <button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Employee</button>
 
@@ -34,22 +34,20 @@
          <div class="col-md-12" ng-show="filteredItems > 0">
              <table class="table table-striped table-bordered">
              <thead>
-				 <th>Owner ID&nbsp;<a ng-click="sort_by('owner_id');"><i class="glyphicon glyphicon-sort"></i></a></th>
-				 <th>Name&nbsp;<a ng-click="sort_by('name');"><i class="glyphicon glyphicon-sort"></i></a></th>
-				 <th>Address&nbsp;</th>
-				 <th>Phone&nbsp;</th>
-				 <th>Business Name&nbsp;</th>
-				 <th>Status&nbsp;<a ng-click="sort_by('creditLimit');"><i class="glyphicon glyphicon-sort"></i></a></th>
-				 <th>Action</th>
+			 <th>ID&nbsp;<a ng-click="sort_by('sn');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Username&nbsp;<a ng-click="sort_by('username');"><i class="glyphicon glyphicon-sort"></i></a></th>
+             <th>Password&nbsp;</th>
+             <th>User Type&nbsp;</th>
+			
+             <th>Status&nbsp;<a ng-click="sort_by('creditLimit');"><i class="glyphicon glyphicon-sort"></i></a></th>
+			 <th>Action</th>
              </thead>
              <tbody>
-                 <tr ng-repeat="data in filtered = (products | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" animate-on-change='data.name + data.address + data.phone + data.business_name+ data.status' ng-animate=" 'animate'">
-                     <td>{{data.owner_id}}</td>
-					 <td>{{data.name}}</td>
-                     <td>{{data.address}}</td>
-                     <td>{{data.phone}}</td>
-                     <td>{{data.business_name}}</td>
-                    
+                 <tr ng-repeat="data in filtered = (products | filter:search | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" animate-on-change='data.username + data.password + data.type  + data.status' ng-animate=" 'animate'">
+                     <td>{{data.sn}}</td>
+					 <td>{{data.username}}</td>
+                     <td>{{data.password}}</td>
+                     <td>{{data.type}}</td>
                      <td>
 						 <button class="btn" ng-class="{1:'btn-success', 0:''}[data.status]" ng-click="changeProductStatus(data);"> <span ng-if="data.status =='1'">
           			   Active

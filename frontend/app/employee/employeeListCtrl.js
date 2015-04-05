@@ -1,14 +1,14 @@
-app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
-   
-	 
-	$scope.product = {};
+app.controller('employeeListCtrl', function ($scope, $modal, $filter, Data) {
+    $scope.product = {};
 	//$scope.title =null;
-
-	   Data.get('shoplist').then(function(data){
+	 Data.get('rolelist').then(function(data){
+        $scope.dt = data.data;
+		});
+    Data.get('emplist').then(function(data){
         $scope.products = data.data;
 
         $scope.currentPage = 1; //current page
-        $scope.entryLimit = 5; //max no of items to display in a page
+        $scope.entryLimit = 3; //max no of items to display in a page
         $scope.filteredItems = $scope.products.length; //Initially for no filter  
         $scope.totalItems = $scope.products.length;
     });
@@ -21,25 +21,22 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
 	        $scope.predicate = predicate;
 	        $scope.reverse = !$scope.reverse;
 	    };
-	   
-
-
+	
     $scope.changeProductStatus = function(product){
         product.status = (product.status=="1" ? "0" : "1");
-        Data.post("changestatus",{status:product.status,shopid:product.shopid});
+        Data.post("changestatus",{status:product.status,id:product.sn});
     };
     $scope.deleteProduct = function(product){
         if(confirm("Are you sure to remove the product")){
-            Data.post("deleteshop",product).then(function(result){
-                $scope.products = _.without($scope.products, _.findWhere($scope.products, {shopid:product.shopid}));
+            Data.post("deleteemployee",product).then(function(result){
+                $scope.products = _.without($scope.products, _.findWhere($scope.products, {sn:product.sn}));
             });
         }
     };
     $scope.open = function (p,size) {
-		
 	      var modalInstance = $modal.open({
-          templateUrl: '../app/shop/partials/shopEdit.html',
-          controller: 'shopEditCtrl',
+          templateUrl: '../app/employee/partials/ownerEdit.html',
+          controller: 'emplistEditCtrl',
           size: size,
           resolve: {
             item: function () {
@@ -53,36 +50,23 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
                
 			    //$scope.products.splice(0,0,selectedObject);
 				$scope.products.unshift(selectedObject);
-                //$scope.products = $filter('orderBy')($scope.products, 'shopid', 'reverse');
-			
+                //$scope.products = $filter('orderBy')($scope.products, 'owner_id', 'reverse');
 				
             }else if(selectedObject.save == "update"){
-                p.ShopName = selectedObject.ShopName;
-                p.Address1 = selectedObject.Address1;
-                p.ContactNo = selectedObject.ContactNo;
-                p.owner_name = selectedObject.owner_name;
-                p.Logo = selectedObject.Logo;
-                p.Slogan = selectedObject.Slogan;
-                p.owner_id = selectedObject.owner_id;
-                p.shop_type = selectedObject.shop_type;
+                p.username = selectedObject.username;
+                p.password = selectedObject.password;
+                p.type = selectedObject.type;
                 p.status = selectedObject.status;
-               
+                
             }
         });
     };
-	
-	
     
  $scope.columns = [
-                    {text:"Shop ID",predicate:"shopid",sortable:true,dataType:"number"},
-                    {text:"Shop Name",predicate:"ShopName",sortable:true},
-                    {text:"Address",predicate:"Address1",sortable:true},
-                    {text:"Contact No",predicate:"ContactNo",sortable:true},
-                    {text:"Owner Name",predicate:"owner_name",sortable:true},
-                    {text:"Logo",predicate:"Logo",sortable:true},
-                    {text:"Slogan",predicate:"Slogan",sortable:true},
-                    {text:"Owner ID",predicate:"owner_id",sortable:true},
-                    {text:"Shop Type",predicate:"shop_type",sortable:true},
+                    {text:"ID",predicate:"sn",sortable:true,dataType:"number"},
+                    {text:"Username",predicate:"username",sortable:true},
+                    {text:"Password",predicate:"password",sortable:true},
+                    {text:"User Type",predicate:"type",sortable:true},
                     {text:"Status",predicate:"status",sortable:true},
                     {text:"Action",predicate:"",sortable:false}
                 ];
@@ -90,19 +74,19 @@ app.controller('shopListCtrl', function ($http,$scope, $modal, $filter, Data) {
 });
 
 
-app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Data) {
+app.controller('emplistEditCtrl', function ($scope, $modalInstance, item, Data) {
 
   $scope.product = angular.copy(item);
-        
-		Data.get('ownerlist').then(function(data){
+  
+  Data.get('rolelist').then(function(data){
         $scope.dt = data.data;
 		});
-		
+        
         $scope.cancel = function () {
             $modalInstance.dismiss('Close');
         };
-        $scope.title = (item.shopid > 0) ? 'Edit Shop' : 'Add Shop';
-        $scope.buttonText = (item.shopid > 0) ? 'Update Shop' : 'Add New Shop';
+        $scope.title = (item.sn > 0) ? 'Edit Owner' : 'Add Owner';
+        $scope.buttonText = (item.sn > 0) ? 'Update Owner' : 'Add New Owner';
 
         var original = item;
         $scope.isClean = function() {
@@ -110,8 +94,8 @@ app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Dat
         }
         $scope.saveProduct = function (product) {
             product.uid = $scope.uid;
-            if(product.shopid > 0){
-                Data.post('updateshop', product).then(function (result) {
+            if(product.sn > 0){
+                Data.post('updateemployee', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'update';
@@ -122,11 +106,11 @@ app.controller('shopEditCtrl', function ($http,$scope, $modalInstance, item, Dat
                 });
             }else{
                 product.status = 1;
-                Data.post('createshop', product).then(function (result) {
+                Data.post('createemployee', product).then(function (result) {
                     if(result.status != 'error'){
                         var x = angular.copy(product);
                         x.save = 'insert';
-                        x.shopid = result.data;						
+                        x.owner_id = result.data;						
                         $modalInstance.close(x);
                     }else{
                         //console.log(result);
