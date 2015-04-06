@@ -1,10 +1,10 @@
-<h4 class="blog-post-title">Employee List</h4>
+<h4 class="blog-post-title">Shop Owner List</h4>
 <hr/>
-<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Employee</button>
+<button type="button" class="btn btn-danger fa fa-plus" ng-click="open(product);">&nbsp;Add New Owner</button>
 
 <div class="table-responsive">
 <div class="panel panel-primary">
-  <div class="panel-heading">List of Employee
+  <div class="panel-heading">List of Owners
       <div class="sw-search" >
             <div class="nav-search" id="nav-search">
 				
@@ -60,8 +60,10 @@
 						</td>
                      <td>
 						<div class="btn-group">
-						      <button type="button" class="btn btn-default fa fa-edit" ng-click="open(data);"></button>
-						      <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(data);"></button>
+						      <button type="button" class="btn btn-default fa fa-edit" ng-click="open(data);" title="Edit"></button>
+						      <button type="button" class="btn btn-danger fa fa-trash-o" ng-click="deleteProduct(data);" title="Delete"></button>
+                           <a href="details/?OwnerId={{data.owner_id}}">Details</a>
+                           
 						     </div>
                      </td>
                  </tr>

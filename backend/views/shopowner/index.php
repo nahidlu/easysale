@@ -9,7 +9,6 @@ use kartik\widgets\Select2;
 use backend\models\Shop;
 use yii\db\Query;
 use yii\web\session;
-
 ?>
 <script src="<?= Yii::$app->getUrlManager()->getBaseUrl();?>/js/angular.min.js"></script>
 <!-- Libraries -->

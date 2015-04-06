@@ -58,4 +58,5 @@ class Shopowner extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+	
 }

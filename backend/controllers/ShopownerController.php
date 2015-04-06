@@ -125,5 +125,17 @@ class ShopownerController extends \yii\web\Controller
 		}
 	}
 	
+	public function actionDetails($OwnerId){
+		
+		$model = Shopowner::findOne($OwnerId);
+		
+		$shopmodel = Shop::find()
+    	->where(['owner_id' =>$OwnerId])
+    	->all();
+		//$connection = \Yii::$app->db;
+		//echo $model->name;
+		//exit;
+		return $this->render('details',['model'=>$model,'shopmodel'=>$shopmodel]);
+	}
 	
 }
