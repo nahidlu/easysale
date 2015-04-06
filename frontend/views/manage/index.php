@@ -18,14 +18,15 @@ use yii\widgets\ActiveForm;
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Products</a></li>
+    <li role="presentation" class="active"><a href="#supplier" aria-controls="home" role="tab" data-toggle="tab">Supplier</a></li>
+    <li role="presentation"><a href="#category" aria-controls="category" role="tab" data-toggle="tab">Products Category</a></li>
+    <li role="presentation"><a href="#products" aria-controls="products" role="tab" data-toggle="tab">Products</a></li>
  
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade in active" id="home">
+   <div role="tabpanel" class="tab-pane fade in active" id="supplier">
 	<div class="row" ng-controller="supplierController">
 	<div class="col-md-6">
 	<h3><i class="glyphicon glyphicon-user"></i> Add Supplier</h3><hr>
@@ -83,7 +84,7 @@ use yii\widgets\ActiveForm;
 	</div>
 </div>
 </div>
- <div role="tabpanel" class="tab-pane fade" id="profile">
+   <div role="tabpanel" class="tab-pane fade" id="category">
 <div class="row" >
 	<div class="col-md-6">
 	<div ng-controller="productController">
@@ -166,7 +167,13 @@ use yii\widgets\ActiveForm;
 </div>
     
   </div>
-
+   <div role="tabpanel" class="tab-pane fade" id="products">
+   add product form here .
+   
+   product will be saved using ajax
+   </div>
+  </div>
+ 
 </div>
 
 
