@@ -2,11 +2,31 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Supplier */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<?php 
+$saveUrl=Yii::$app->getUrlManager()->createUrl('manage/saveproduct');
+$this->registerJs('
+$("#btnSubmit").on("click", function(e){
+var form=$("#productForm");
+$.ajax({
+	type:"POST",
+	url:"'.$saveUrl.'",
+	data:form.serialize(),
+	success:function(data){
+	var obj=jQuery.parseJSON(data);
+	}}); 
+	e.preventDefault();
+  
+});
+');
+?>
+
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
 
 <script src="<?php echo Yii::$app->request->baseUrl.'/js/jquery.dataTables.min.js' ?>"></script>
@@ -100,34 +120,38 @@ use yii\widgets\ActiveForm;
 	  </div>
 	 <input type="hidden" class="form-control"  ng-model="id" >
 	 <button class="btn btn-success" ng-click='Save();' ng-disabled="productForm.$invalid"  type="button" >Submit</button>
-	</form><hr>
+	</form>    
+    
 	
+  
+	<h3> <i class="glyphicon glyphicon-queen"></i>  Category List</h3><hr>
 	<table  datatable="ng" class="table table-striped">
 	<thead><tr><th>Product Category Name</th><th>Action</th></tr></thead>
 	<tr ng-repeat="x in data">
                         <td >{{x.CategoryName}}</td>
                        <td>
-						
-							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.CategoryID)"></i>
-							
-							  <i ng-click="deleteUser(x.CategoryID)" ng-confirm-click="Are you sure you want to delete this?" class="glyphicon glyphicon-trash" ></i>
-							
-						</td>
-                       
+							  <i class="glyphicon glyphicon-pencil" ng-click="editUser(x.CategoryID)"></i>				
+							  <i ng-click="deleteUser(x.CategoryID)" ng-confirm-click="Are you sure you want to delete this?" class="glyphicon glyphicon-trash" ></i>	
+						</td>                       
                     </tr>
-</table> 
-		</div></div>
-	
-	<div class="col-md-6">
+                    </table> 
+		
+        </div>
+    </div>
+</div>    
+  </div>
+   <!--<div role="tabpanel" class="tab-pane fade" id="products">
+  <div class="col-md-6">
 	<h4><i class="glyphicon glyphicon-queen"></i> Product Name</h4><hr>
 	<div ng-controller="productnameController">
 		<div class="alert in alert-block fade alert-success" ng-repeat="msg in msgs"> {{ msg}} </div>
     
 	<form name="productCategoryForm" novalidate>
+    
 	<div class="form-group" ng-class="{true: 'error'}[submitted && productCategoryForm.catname.$invalid]">
 		<label >Select Category Name</label>
 		<select name="catname" ng-model="catname" class="form-control" required>
-			  <?php echo $line; ?>
+			  <?php //$line; ?>
 		</select>
 		<span ng-show="productCategoryForm.catname.$dirty && productCategoryForm.catname.$error.required" style="color:red">Product Category Name is required</span>
 	</div>
@@ -144,7 +168,11 @@ use yii\widgets\ActiveForm;
 	  </div>
 	  
 	 <button class="btn btn-success" ng-click='Sendd();' ng-disabled="productCategoryForm.$invalid"  type="button" >Submit</button>
-  </form><hr>
+  </form>
+  </div>
+  </div>
+  <div class="col-md-6">
+	<h3> <i class="glyphicon glyphicon-user"></i>  Product List</h3><hr>
   <table  datatable="ng" class="table table-striped">
 	<thead><tr><th>Product Name</th><th>Product ID</th><th>Action</th></tr></thead>
 	<tr ng-repeat="x in data">
@@ -161,16 +189,58 @@ use yii\widgets\ActiveForm;
                     </tr>
 </table> 
 	</div>
+	
+   </div>-->
+   
+   <div role="tabpanel" class="tab-pane fade" id="products">
+  <div class="col-md-6">
+	<h3><i class="glyphicon glyphicon-queen"></i> Product Name</h3><hr>
+	<div>
+		    
+	<form id="productForm">
+    
+	<div class="form-group" >
+		<label >Select Category Name</label>
+		<select name="catname" ng-model="catname" class="form-control" required>
+			  <?= $line; ?>
+		</select>
+		
+	</div>
+	 <div class="form-group">
+		<label >Product Name</label>
+		<input type="text" name="pdname" ng-model="pdname" class="form-control"  placeholder="Product Name"  required>
+		<input type="hidden" name="id" ng-model="id" class="form-control" >
+		
+	  </div>
+	 <div class="form-group" >
+		<label for="exampleInputEmail1">Product ID</label><div class="clearfix"></div>
+		<input type="text" style="width: 95%;float: left;margin-right: 5px" class="form-control"  id="exampleInputEmail1" placeholder="Enter Product ID" disabled>
+		<span><input type="checkbox" id="inputSuccess1"></span>
+	  </div>
+	  
+	 <button name="btnProduct" id="btnSubmit" class="btn btn-success" type="submit">Submit</button>
+  </form>
+  </div>  
+  
+  </div>
+  <div class="col-md-6">
+	<h3> <i class="glyphicon glyphicon-user"></i>  Product List</h3><hr>
+  <?php Pjax::begin();?>
+  <?= GridView:: Widget([
+  'dataProvider' => $dataProvider,
+  'filterModel' => $searchModel,
+  'columns' => [
+  ['class' => 'yii\grid\SerialColumn'],
+        'ProductID',
+        'ProductName',        
+        // ...
+    ],
+  
+  ]);  
+  ?> 
+  <?php Pjax::end();?>
 	</div>
 	
-
-</div>
-    
-  </div>
-   <div role="tabpanel" class="tab-pane fade" id="products">
-   add product form here .
-   
-   product will be saved using ajax
    </div>
   </div>
  

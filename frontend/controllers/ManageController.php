@@ -35,13 +35,22 @@ class ManageController extends Controller
      */
     public function actionIndex()
     {
+		//
+		$searchModel = new Product();
+		$dataProvider = $searchModel->search(Yii::$app->request->get());
+		//
+		
 		
 		$data = Productcategory::find()->asArray()->all();
 		$line = "";
 		foreach($data as $value){
 		$line.="<option value=".$value['CategoryID'].">".$value['CategoryName']."</option>";
 		}
-		return $this->render('index',['line'=>$line]);
+				
+		return $this->render('index',['line'=>$line,
+		'dataProvider' => $dataProvider,
+    'searchModel' => $searchModel,
+		]);
     }
 	
 	public function actionTest(){
@@ -241,4 +250,25 @@ class ManageController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+	
+	public function actionSaveproduct(){
+		$product = new Product;
+		$product->ProductID = uniqid();		
+		$product->ProductName = $_POST['pdname'];
+		$product->CategoryID = $_POST['catname'];
+		$product->BarcodeNeeded = 1;
+		$product->ShopID = 28; 
+		$product->save();
+		if($product->save()){
+		$arr = array('msg' => "Product Added Successfully !!!", 'error' => '');        
+		}
+		else
+		{
+			$arr = array('msg' => "Product Not Added !!!", 'error' => $product->getErrors());
+        }
+		header('Content-type: application/json');
+		echo json_encode($arr,JSON_NUMERIC_CHECK);
+		
+	}
+	
 }

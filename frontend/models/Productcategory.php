@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "tbl_productcategory".
  *
- * @property string $CategoryID
- * @property string $CategoryName
+ * @property string $ShopID
+ * @property string $ShopName
  */
 class Productcategory extends \yii\db\ActiveRecord
 {

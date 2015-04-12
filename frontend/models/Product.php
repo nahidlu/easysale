@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "tbl_product".
@@ -29,7 +30,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-			[['SN', 'ProductID','ProductName','CategoryID'], 'required'],
+			[['ProductID','ProductName','CategoryID'], 'required'],
           
             [['ProductName'], 'string', 'max' => 100]
         ];
@@ -47,5 +48,20 @@ class Product extends \yii\db\ActiveRecord
             'CategoryID' => 'Category ID',
             'BarcodeNeeded' => 'Barcode Needed',
         ];
+    }
+	public function search($params)
+    {
+        $query = Product::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        // load the seach form data and validate
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+        
+        return $dataProvider;
     }
 }
